@@ -1,0 +1,44 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: my-demo-application-set
+  namespace: openshift-gitops
+spec:
+  generators:
+    - list:
+        elements:
+          - name: Operators
+            path: operators
+            syncWave: '0'
+          - name: Prerequisites
+            path: prerequisites
+            syncWave: "1"
+          - name: CRD Instances
+            path: crd-instances
+            syncWave: "2"
+  template:
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: '{{syncWave}}'
+      name: '{{name}}'
+    spec:
+      destination:
+        server: 'https://kubernetes.default.svc'
+      project: default
+      source:
+        path: '{{path}}'
+        repoURL: 'https://github.com/pablo-preciado/testing-helm-deployment.git'
+        targetRevision: HEAD
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        retry:
+          backoff:
+            duration: 30s
+            factor: 2
+            maxDuration: 10m
+          limit: 10
+        syncOptions:
+          - CreateNamespace=true
