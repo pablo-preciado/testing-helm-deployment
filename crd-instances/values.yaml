@@ -19,4 +19,4 @@ aap:
 gitlab:
   instanceName: gitlab
   namespaceName: gitlab-system
-  clusterDomain: apps.cluster-qql8d.qql8d.gcp.redhatworkshops.io
+  clusterDomain: apps.cluster-6mtl2.6mtl2.gcp.redhatworkshops.io
