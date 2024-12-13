@@ -7,13 +7,13 @@ spec:
   generators:
     - list:
         elements:
-          - name: Operators
+          - name: operators
             path: operators
             syncWave: '0'
-          - name: Prerequisites
+          - name: prerequisites
             path: prerequisites
             syncWave: "1"
-          - name: CRD Instances
+          - name: crd-instances
             path: crd-instances
             syncWave: "2"
   template:
