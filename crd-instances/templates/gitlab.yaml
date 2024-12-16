@@ -27,4 +27,4 @@ spec:
       postgresql:
         primary:
           extendedConfiguration: max_connections = 200
-    version: 8.6.1
+    version: 8.6.2

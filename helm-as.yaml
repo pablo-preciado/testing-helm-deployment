@@ -9,13 +9,20 @@ spec:
         elements:
           - name: operators
             path: operators
-            syncWave: '0'
+            syncWave: "0"
+            # extravars: false
           - name: prerequisites
             path: prerequisites
             syncWave: "1"
+            # extravars: false
           - name: crd-instances
             path: crd-instances
             syncWave: "2"
+            # extravars: true
+            # helmExtraParameter1: keycloak.hostname
+            # helmExtraParameterValue1: keycloak.apps.cluster-6mtl2.6mtl2.gcp.redhatworkshops.io
+            # helmExtraParameter2: keycloak.hostname
+            # helmExtraParameterValue2: keycloak.apps.cluster-6mtl2.6mtl2.gcp.redhatworkshops.io
   template:
     metadata:
       annotations:
@@ -30,6 +37,12 @@ spec:
         path: '{{path}}'
         repoURL: 'https://github.com/pablo-preciado/testing-helm-deployment.git'
         targetRevision: HEAD
+        helm:
+          parameters:
+            - name: gitlab.clusterDomain
+              value: apps.cluster-6mtl2.6mtl2.gcp.redhatworkshops.io
+            - name: keycloak.hostname
+              value: keycloak.apps.cluster-6mtl2.6mtl2.gcp.redhatworkshops.io
       syncPolicy:
         automated:
           prune: true
@@ -42,3 +55,14 @@ spec:
           limit: 10
         syncOptions:
           - CreateNamespace=true
+#  templatePatch: |
+#    {{- if .extravars }}
+#    spec:
+#      source:
+#        helm:
+#          parameters: 
+#            - name: {{ .helmExtraParameter1 }}
+#              value: {{ .helmExtraParameterValue1 }}
+#            - name: {{ .helmExtraParameter2 }}
+#              value: {{ .helmExtraParameterValue2 }}
+#    {{- end }}
