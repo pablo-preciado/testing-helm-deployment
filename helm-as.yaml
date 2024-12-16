@@ -15,9 +15,12 @@ spec:
             path: prerequisites
             syncWave: "1"
             # extravars: false
+          - name: wait-job
+            path: wait-5-mins
+            syncWave: "2"
           - name: crd-instances
             path: crd-instances
-            syncWave: "2"
+            syncWave: "3"
             # extravars: true
             # helmExtraParameter1: keycloak.hostname
             # helmExtraParameterValue1: keycloak.apps.cluster-6mtl2.6mtl2.gcp.redhatworkshops.io
@@ -40,16 +43,16 @@ spec:
         helm:
           parameters:
             - name: gitlab.clusterDomain
-              value: apps.cluster-6mtl2.6mtl2.gcp.redhatworkshops.io
+              value: apps.cluster-grlrs.grlrs.gcp.redhatworkshops.io
             - name: keycloak.hostname
-              value: keycloak.apps.cluster-6mtl2.6mtl2.gcp.redhatworkshops.io
+              value: keycloak.apps.cluster-grlrs.grlrs.gcp.redhatworkshops.io
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
         retry:
           backoff:
-            duration: 30s
+            duration: 10s
             factor: 2
             maxDuration: 10m
           limit: 10
