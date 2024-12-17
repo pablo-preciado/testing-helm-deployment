@@ -9,6 +9,7 @@ metadata:
   namespace: '{{ .Values.aap.namespaceName }}'
   annotations:
     argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   api:
     log_level: INFO

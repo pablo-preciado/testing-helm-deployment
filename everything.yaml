@@ -12,10 +12,8 @@ spec:
   source:
     helm:
       parameters:
-        - name: gitlab.clusterDomain
-          value: apps.cluster-grlrs.grlrs.gcp.redhatworkshops.io
-        - name: keycloak.hostname
-          value: keycloak.cluster-grlrs.grlrs.gcp.redhatworkshops.io
+        - name: cluster.domain
+          value: apps.cluster-tlph2.tlph2.gcp.redhatworkshops.io
     path: Everything
     repoURL: 'https://github.com/pablo-preciado/testing-helm-deployment.git'
     targetRevision: HEAD
