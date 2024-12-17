@@ -12,5 +12,5 @@ spec:
       containers:
       - name: delay
         image: registry.access.redhat.com/ubi8/ubi-minimal
-        command: ["sh", "-c", "sleep 180"] # Wait for 53 minutes
+        command: ["sh", "-c", "sleep 180"]
       restartPolicy: Never

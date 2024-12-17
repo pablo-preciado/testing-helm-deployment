@@ -26,8 +26,6 @@ spec:
             - /bin/bash
             - '-c'
             - |
-              WOLO=$(oc get gitlab gitlab -n gitlab-system)
-              echo $WOLO
               echo "Waiting for GitLab CR..."
               while true; do
                 STATUS=$(oc get gitlab gitlab -n gitlab-system -o jsonpath='{.status.conditions[?(@.type=="Available")].status}' 2>/dev/null)

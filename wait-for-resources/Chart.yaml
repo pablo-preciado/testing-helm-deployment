@@ -1,0 +1,4 @@
+apiVersion: v2
+name: my-demo-wait-for-resources
+version: 0.1.0
+description: Wait for resources to be ready before deploying rhdh
