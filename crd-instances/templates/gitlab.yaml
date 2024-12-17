@@ -7,7 +7,7 @@ spec:
   chart:
     values:
       registry:
-        enable: false
+        enabled: false
       gitlab:
         toolbox:
           sidekiq:
