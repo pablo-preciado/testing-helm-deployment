@@ -3,8 +3,6 @@ kind: Subscription
 metadata:
   name: {{ .Values.tekton.subscriptionName }}
   namespace: openshift-operators
-  annotations:
-    argocd.argoproj.io/sync-wave: "0"
 spec:
   channel: latest
   name: openshift-pipelines-operator-rh

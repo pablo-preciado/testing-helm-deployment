@@ -3,8 +3,6 @@ kind: GitLab
 metadata:
   name: '{{ .Values.gitlab.instanceName }}'
   namespace: '{{ .Values.gitlab.namespaceName }}'
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
 spec:
   chart:
     values:

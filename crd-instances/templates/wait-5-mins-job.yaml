@@ -6,12 +6,11 @@ metadata:
   annotations:
     argocd.argoproj.io/hook: PreSync
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
-    argocd.argoproj.io/sync-wave: "2"
 spec:
   template:
     spec:
       containers:
       - name: delay
         image: registry.access.redhat.com/ubi8/ubi-minimal
-        command: ["sh", "-c", "sleep 300"] # Wait for 5 minutes (300 seconds)
+        command: ["sh", "-c", "sleep 180"] # Wait for 5 minutes (300 seconds)
       restartPolicy: Never

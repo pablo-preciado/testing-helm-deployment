@@ -5,8 +5,6 @@ metadata:
   labels:
     app: sso  
   namespace: '{{ .Values.keycloak.namespaceName }}'
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
 spec:
   keycloakCRName: '{{ .Values.keycloak.instanceName }}'
   realm:

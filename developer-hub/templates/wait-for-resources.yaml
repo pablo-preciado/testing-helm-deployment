@@ -1,0 +1,75 @@
+kind: Job
+apiVersion: batch/v1
+metadata:
+  name: wait-for-resources-job
+  namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      serviceAccountName: resources-checker
+      containers:
+        - name: wait-for-resources
+          image: registry.redhat.io/openshift4/ose-cli # registry.redhat.io/rhel9/support-tools:latest #registry.access.redhat.com/ubi8/ubi-minimal
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
+          command:
+            - /bin/bash
+            - '-c'
+            - |
+              WOLO=$(oc get gitlab gitlab -n gitlab-system)
+              echo $WOLO
+              echo "Waiting for GitLab CR..."
+              while true; do
+                STATUS=$(oc get gitlab gitlab -n gitlab-system -o jsonpath='{.status.conditions[?(@.type=="Available")].status}' 2>/dev/null)
+                if [[ "$STATUS" == "True" ]]; then
+                  echo "GitLab CR is ready."
+                  break
+                fi
+                echo "Retrying GitLab CR readiness check..."
+                sleep 5
+              done
+
+              echo "Waiting for HyperConverged CR..."
+              while true; do
+                STATUS=$(oc get hyperconverged kubevirt-hyperconverged -n openshift-cnv -o jsonpath='{.status.conditions[?(@.type=="Available")].status}' 2>/dev/null)
+                if [[ "$STATUS" == "True" ]]; then
+                  echo "HyperConverged CR is ready."
+                  break
+                fi
+                echo "Retrying HyperConverged CR readiness check..."
+                sleep 5
+              done
+
+              echo "Waiting for Keycloak CR..."
+              while true; do
+                STATUS=$(oc get keycloak example-keycloak -n keycloak -o jsonpath='{.status.conditions[?(@.type=="Ready")].status}' 2>/dev/null)
+                if [[ "$STATUS" == "True" ]]; then
+                  echo "Keycloak CR is ready."
+                  break
+                fi
+                echo "Retrying Keycloak CR readiness check..."
+                sleep 5
+              done
+
+              echo "Waiting for Ansible Automation Platform CR..."
+              while true; do
+                STATUS=$(oc get ansibleautomationplatform my-aap -n aap -o jsonpath='{.status.conditions[?(@.type=="Running")].status}' 2>/dev/null)
+                if [[ "$STATUS" == "True" ]]; then
+                  echo "Ansible Automation Platform CR is ready."
+                  break
+                fi
+                echo "Retrying Ansible Automation Platform CR readiness check..."
+                sleep 5
+              done
+
+              echo "All resources are fully deployed."
