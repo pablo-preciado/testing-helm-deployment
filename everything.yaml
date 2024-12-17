@@ -16,7 +16,7 @@ spec:
           value: apps.cluster-grlrs.grlrs.gcp.redhatworkshops.io
         - name: keycloak.hostname
           value: keycloak.cluster-grlrs.grlrs.gcp.redhatworkshops.io
-    path: everything
+    path: Everything
     repoURL: 'https://github.com/pablo-preciado/testing-helm-deployment.git'
     targetRevision: HEAD
   syncPolicy:

@@ -7,6 +7,8 @@ metadata:
     app.kubernetes.io/part-of: my-aap-instance
   name: '{{ .Values.aap.instanceName }}'
   namespace: '{{ .Values.aap.namespaceName }}'
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   api:
     log_level: INFO
