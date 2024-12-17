@@ -17,9 +17,9 @@ spec:
         enabled: false
       certmanager:
         install: false
-      sidekiq:
-          enabled: false
       global:
+        sidekiq:
+          enabled: false
         kas:
           enabled: false
         hosts:
