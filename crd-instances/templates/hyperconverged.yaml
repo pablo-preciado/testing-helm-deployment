@@ -7,6 +7,8 @@ metadata:
     - kubevirt.io/hyperconverged
   labels:
     app: kubevirt-hyperconverged
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   virtualMachineOptions:
     disableFreePageReporting: false

@@ -5,6 +5,7 @@ metadata:
   annotations:
     openshift.io/description: {{ .Values.developerhub.namespaceName }}
     openshift.io/display-name: {{ .Values.developerhub.namespaceName }}
+    argocd.argoproj.io/sync-wave: "0"
   name: {{ .Values.developerhub.namespaceName }}
   labels:
     argocd.argoproj.io/managed-by: openshift-gitops
@@ -14,6 +15,8 @@ kind: OperatorGroup
 metadata:
   name: {{ .Values.developerhub.operatorGroupName }}
   namespace: {{ .Values.developerhub.namespaceName }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   upgradeStrategy: Default
 ---
@@ -22,6 +25,8 @@ kind: Subscription
 metadata:
   name: {{ .Values.developerhub.subscriptionName }}
   namespace: {{ .Values.developerhub.namespaceName }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   channel: fast
   installPlanApproval: Automatic

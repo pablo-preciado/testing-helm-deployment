@@ -5,6 +5,7 @@ metadata:
   annotations:
     openshift.io/description: {{ .Values.keycloak.namespaceName }}
     openshift.io/display-name: {{ .Values.keycloak.namespaceName }}
+    argocd.argoproj.io/sync-wave: "0"
   name: {{ .Values.keycloak.namespaceName }}
   labels:
     argocd.argoproj.io/managed-by: openshift-gitops
@@ -15,6 +16,7 @@ metadata:
   name: {{ .Values.keycloak.operatorGroupName }}
   namespace: {{ .Values.keycloak.namespaceName }}
   annotations:
+    argocd.argoproj.io/sync-wave: "0"
     olm.providedAPIs: Keycloak.v2alpha1.k8s.keycloak.org,KeycloakRealmImport.v2alpha1.k8s.keycloak.org  
 spec:
   targetNamespaces: 
@@ -26,6 +28,8 @@ kind: Subscription
 metadata:
   name: {{ .Values.keycloak.subscriptionName }}
   namespace: {{ .Values.keycloak.namespaceName }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   channel: stable-v26.0
   installPlanApproval: Automatic

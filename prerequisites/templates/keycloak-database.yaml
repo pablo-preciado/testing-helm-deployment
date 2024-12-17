@@ -3,6 +3,8 @@ kind: StatefulSet
 metadata:
   name: '{{ .Values.keycloak.statefulSetName }}'
   namespace: '{{ .Values.keycloak.namespaceName }}'
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   serviceName: postgresql-db-service
   selector:

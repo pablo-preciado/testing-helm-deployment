@@ -5,6 +5,8 @@ metadata:
   labels:
     app: sso
   namespace: '{{ .Values.keycloak.namespaceName }}'
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   instances: 1
   hostname:

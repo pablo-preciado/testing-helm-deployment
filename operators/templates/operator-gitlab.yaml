@@ -5,12 +5,16 @@ metadata:
   name: {{ .Values.gitlab.namespaceName }}
   labels:
     argocd.argoproj.io/managed-by: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 ---
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
   name: {{ .Values.gitlab.operatorGroupName }}
   namespace: {{ .Values.gitlab.namespaceName }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   targetNamespaces:
     - {{ .Values.gitlab.namespaceName }}
@@ -23,6 +27,8 @@ metadata:
     operators.coreos.com/gitlab-operator-kubernetes.gitlab-system: ''
   name: {{ .Values.gitlab.subscriptionName }}
   namespace: {{ .Values.gitlab.namespaceName }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   channel: stable
   installPlanApproval: Automatic
