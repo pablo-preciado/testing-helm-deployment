@@ -4,11 +4,15 @@ kind: ServiceAccount
 metadata:
   name: resources-checker
   namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: resources-checker-rolebinding
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 subjects:
 - kind: ServiceAccount
   name: resources-checker
