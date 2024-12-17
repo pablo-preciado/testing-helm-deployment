@@ -17,10 +17,10 @@ spec:
         enabled: false
       certmanager:
         install: false
+      sidekiq:
+          enabled: false
       global:
         kas:
-          enabled: false
-        sidekiq:
           enabled: false
         hosts:
           domain: '{{ .Values.gitlab.clusterDomain }}'
