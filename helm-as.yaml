@@ -16,6 +16,9 @@ spec:
           - name: crd-instances
             path: crd-instances
             syncWave: "2"
+          - name: wait-for-resources
+            path: wait-for-resources
+            syncWave: "3"
   template:
     metadata:
       annotations:
