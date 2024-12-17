@@ -51,9 +51,9 @@ spec:
         publicClient: false
         secret: my-predefined-client-secret
         redirectUris:
-          - "https://backstage.'{{ .Values.keycloak.clusterDomain }}'/api/auth/oidc/handler/frame"
+          - "https://backstage.{{ .Values.keycloak.clusterDomain }}/api/auth/oidc/handler/frame"
         webOrigins:
-          - "https://backstage.'{{ .Values.keycloak.clusterDomain }}'"
+          - "https://backstage.{{ .Values.keycloak.clusterDomain }}"
         consentRequired: false
         standardFlowEnabled: true
         implicitFlowEnabled: true
