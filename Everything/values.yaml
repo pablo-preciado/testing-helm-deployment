@@ -1,11 +1,15 @@
+cluster:
+  domain: apps.cluster-grlrs.grlrs.gcp.redhatworkshops.io
 aap:
   namespaceName: aap
   operatorGroupName: aap-operatorgroup
   subscriptionName: ansible-automation-platform-operator
+  instanceName: my-aap
 developerhub:
   namespaceName: rhdh-operator
   operatorGroupName: rhdh-operatorgroup
   subscriptionName: rhdh2vm
+  # la mayus?
   appConfigConfigMapName: my-backstage-appconfig-developer-hub
   dynamicPluginsConfigMapName: my-backstage-dynamic-plugins-developer-hub
   instanceName: developer-hub
@@ -14,10 +18,12 @@ gitlab:
   namespaceName: gitlab-system
   operatorGroupName: gitlab-system-operator-group
   subscriptionName: gitlab-operator-kubernetes
+  instanceName: gitlab
 openshiftVirtualization:
   namespaceName: openshift-cnv
   operatorGroupName: openshift-cnv-operatorgroup
   subscriptionName: kubevirt-hyperconverged
+  instanceName: kubevirt-hyperconverged
 tekton:
   subscriptionName: openshift-pipelines-operator
 keycloak:

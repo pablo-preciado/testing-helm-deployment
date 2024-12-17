@@ -23,7 +23,7 @@ spec:
         kas:
           enabled: false
         hosts:
-          domain: '{{ .Values.gitlab.clusterDomain }}'
+          domain: '{{ .Values.cluster.domain }}'
         ingress:
           tls:
             enabled: false
