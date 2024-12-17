@@ -3,6 +3,8 @@ apiVersion: v1
 metadata:
   name: '{{ .Values.developerhub.dynamicPluginsConfigMapName }}'
   namespace: '{{ .Values.developerhub.namespaceName }}'
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
 data:
   dynamic-plugins.yaml: |
     includes:

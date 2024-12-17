@@ -11,6 +11,7 @@ developerhub:
   subscriptionName: rhdh2vm
   # la mayus?
   appConfigConfigMapName: my-backstage-appconfig-developer-hub
+  appConfigConfigMapkey: my.app-config.yaml
   dynamicPluginsConfigMapName: my-backstage-dynamic-plugins-developer-hub
   instanceName: developer-hub
   rhdhSecretName: secrets-rhdh

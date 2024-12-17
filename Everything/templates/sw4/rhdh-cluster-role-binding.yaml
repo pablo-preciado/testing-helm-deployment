@@ -2,6 +2,8 @@ kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: backstage-k8s-plugin
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
 subjects:
   - kind: ServiceAccount
     name: rhdh-operator

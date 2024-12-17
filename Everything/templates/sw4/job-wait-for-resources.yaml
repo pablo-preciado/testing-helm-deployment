@@ -1,9 +1,10 @@
 kind: Job
 apiVersion: batch/v1
 metadata:
-  name: wait-for-resources-job
+  generateName: wait-for-resources-job-
   namespace: openshift-gitops
   annotations:
+    argocd.argoproj.io/sync-wave: "4"
     argocd.argoproj.io/hook: PreSync
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
 spec:
