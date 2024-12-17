@@ -8,7 +8,7 @@ metadata:
 spec:
   instances: 1
   hostname:
-    hostname: '{{ .Values.keycloak.hostname }}'
+    hostname: keycloak.'{{ .Values.keycloak.clusterDomain }}'
   http:
     tlsSecret: '{{ .Values.keycloak.tlsSecretName }}'
   db:

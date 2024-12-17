@@ -10,7 +10,7 @@ openshiftVirtualization:
 keycloak:
   instanceName: example-keycloak
   namespaceName: keycloak
-  hostname: keycloak.apps.cluster-6mtl2.6mtl2.gcp.redhatworkshops.io
+  clusterDomain: apps.cluster-6mtl2.6mtl2.gcp.redhatworkshops.io
   tlsSecretName: my-tls-secret
   dbSecretName: keycloak-db-secret
 aap:
