@@ -18,9 +18,14 @@ spec:
       certmanager:
         install: false
       global:
+        kas:
+          enabled: false
+        sidekiq:
+          enabled: false
         hosts:
           domain: '{{ .Values.gitlab.clusterDomain }}'
         ingress:
+          configureCertmanager: false
           class: none
           annotations:
             route.openshift.io/termination: "edge"
