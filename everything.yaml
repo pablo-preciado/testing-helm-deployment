@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: everything
+  namespace: openshift-gitops
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    helm:
+      parameters:
+        - name: gitlab.clusterDomain
+          value: apps.cluster-grlrs.grlrs.gcp.redhatworkshops.io
+        - name: keycloak.hostname
+          value: keycloak.cluster-grlrs.grlrs.gcp.redhatworkshops.io
+    path: everything
+    repoURL: 'https://github.com/pablo-preciado/testing-helm-deployment.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 10m
+      limit: 10
+    syncOptions:
+      - CreateNamespace=true
