@@ -1,12 +1,11 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: wait-3-minutes
+  generateName: wait-3-minutes-
   namespace: '{{ .Values.aap.namespaceName }}'
   annotations:
     argocd.argoproj.io/hook: PreSync
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
-  annotations:
     argocd.argoproj.io/sync-wave: "3"
 spec:
   template:
