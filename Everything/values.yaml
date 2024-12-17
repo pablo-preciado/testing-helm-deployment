@@ -27,6 +27,7 @@ openshiftVirtualization:
 tekton:
   subscriptionName: openshift-pipelines-operator
 keycloak:
+  instanceName: example-keycloak
   namespaceName: keycloak
   operatorGroupName: keycloak-operatorgroup
   subscriptionName: keycloak-subscription
