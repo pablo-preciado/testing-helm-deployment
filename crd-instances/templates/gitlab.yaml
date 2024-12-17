@@ -6,12 +6,6 @@ metadata:
 spec:
   chart:
     values:
-      registry:
-        enabled: false
-      gitlab:
-        toolbox:
-          sidekiq:
-            enabled: false
       prometheus:
         alertmanager:
           enabled: false
@@ -24,16 +18,19 @@ spec:
       certmanager:
         install: false
       global:
+        sidekiq:
+          enabled: false
         kas:
           enabled: false
         hosts:
           domain: '{{ .Values.gitlab.clusterDomain }}'
         ingress:
+          tls:
+            enabled: false
           configureCertmanager: false
           class: none
           annotations:
             route.openshift.io/termination: "edge"
-            route.openshift.io/disable-tls: "true"
       postgresql:
         primary:
           extendedConfiguration: max_connections = 200
