@@ -13,9 +13,6 @@ spec:
           - name: prerequisites
             path: prerequisites
             syncWave: "1"
-          #- name: wait-job
-          #  path: wait-5-mins
-          #  syncWave: "2"
           - name: crd-instances
             path: crd-instances
             syncWave: "2"

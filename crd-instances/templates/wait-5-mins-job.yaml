@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: wait-5-minutes
+  name: wait-3-minutes
   namespace: '{{ .Values.aap.namespaceName }}'
   annotations:
     argocd.argoproj.io/hook: PreSync
@@ -12,5 +12,5 @@ spec:
       containers:
       - name: delay
         image: registry.access.redhat.com/ubi8/ubi-minimal
-        command: ["sh", "-c", "sleep 180"] # Wait for 5 minutes (300 seconds)
+        command: ["sh", "-c", "sleep 180"] # Wait for 53 minutes
       restartPolicy: Never
