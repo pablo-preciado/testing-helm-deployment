@@ -13,7 +13,7 @@ spec:
       serviceAccountName: resources-checker
       containers:
         - name: wait-for-resources
-          image: registry.redhat.io/openshift4/ose-cli # registry.redhat.io/rhel9/support-tools:latest #registry.access.redhat.com/ubi8/ubi-minimal
+          image: registry.redhat.io/openshift4/ose-cli
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -28,7 +28,7 @@ spec:
             - |
               echo "Waiting for GitLab CR..."
               while true; do
-                STATUS=$(oc get gitlab gitlab -n gitlab-system -o jsonpath='{.status.conditions[?(@.type=="Available")].status}' 2>/dev/null)
+                STATUS=$(oc get gitlab {{ .Values.gitlab.instanceName }} -n {{ .Values.gitlab.namespaceName }} -o jsonpath='{.status.conditions[?(@.type=="Available")].status}' 2>/dev/null)
                 if [[ "$STATUS" == "True" ]]; then
                   echo "GitLab CR is ready."
                   break
@@ -39,7 +39,7 @@ spec:
 
               echo "Waiting for HyperConverged CR..."
               while true; do
-                STATUS=$(oc get hyperconverged kubevirt-hyperconverged -n openshift-cnv -o jsonpath='{.status.conditions[?(@.type=="Available")].status}' 2>/dev/null)
+                STATUS=$(oc get hyperconverged {{ .Values.openshiftVirtualization.instanceName }} -n {{ .Values.openshiftVirtualization.namespaceName }} -o jsonpath='{.status.conditions[?(@.type=="Available")].status}' 2>/dev/null)
                 if [[ "$STATUS" == "True" ]]; then
                   echo "HyperConverged CR is ready."
                   break
@@ -50,7 +50,7 @@ spec:
 
               echo "Waiting for Keycloak CR..."
               while true; do
-                STATUS=$(oc get keycloak example-keycloak -n keycloak -o jsonpath='{.status.conditions[?(@.type=="Ready")].status}' 2>/dev/null)
+                STATUS=$(oc get keycloak {{ .Values.keycloak.instanceName }} -n {{ .Values.keycloak.namespaceName }} -o jsonpath='{.status.conditions[?(@.type=="Ready")].status}' 2>/dev/null)
                 if [[ "$STATUS" == "True" ]]; then
                   echo "Keycloak CR is ready."
                   break
@@ -61,7 +61,7 @@ spec:
 
               echo "Waiting for Ansible Automation Platform CR..."
               while true; do
-                STATUS=$(oc get ansibleautomationplatform my-aap -n aap -o jsonpath='{.status.conditions[?(@.type=="Running")].status}' 2>/dev/null)
+                STATUS=$(oc get ansibleautomationplatform {{ .Values.aap.instanceName }} -n {{ .Values.aap.namespaceName }} -o jsonpath='{.status.conditions[?(@.type=="Running")].status}' 2>/dev/null)
                 if [[ "$STATUS" == "True" ]]; then
                   echo "Ansible Automation Platform CR is ready."
                   break
