@@ -11,7 +11,7 @@ spec:
     helm:
       parameters:
         - name: cluster.domain
-          value: apps.cluster-dqxwv.dqxwv.gcp.redhatworkshops.io
+          value: <here-goes-your-cluster-domain>
     path: rhdh2vm-demo-deploy
     repoURL: 'https://github.com/pablo-preciado/testing-helm-deployment.git'
     targetRevision: HEAD
