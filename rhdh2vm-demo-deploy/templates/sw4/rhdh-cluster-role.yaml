@@ -4,7 +4,7 @@ metadata:
   name: backstage-read-only
   namespace: '{{ .Values.developerhub.namespaceName }}'
   annotations:
-    argocd.argoproj.io/sync-wave: "5"
+    argocd.argoproj.io/sync-wave: "4"
 rules:
   - verbs:
       - get

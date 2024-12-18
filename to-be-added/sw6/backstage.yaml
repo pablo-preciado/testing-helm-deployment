@@ -3,6 +3,8 @@ kind: Backstage
 metadata:
   name: '{{ .Values.developerhub.instanceName }}'
   namespace: '{{ .Values.developerhub.namespaceName }}'
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
 spec:
   application:
     appConfig:
