@@ -13,7 +13,7 @@ spec:
     helm:
       parameters:
         - name: cluster.domain
-          value: apps.cluster-k7vts.k7vts.gcp.redhatworkshops.io
+          value: apps.cluster-dqxwv.dqxwv.gcp.redhatworkshops.io
     path: Everything
     repoURL: 'https://github.com/pablo-preciado/testing-helm-deployment.git'
     targetRevision: HEAD
