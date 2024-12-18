@@ -1,9 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-  name: everything
+  name: rhdh2vm-demo-deploy
   namespace: openshift-gitops
 spec:
   destination:
@@ -14,7 +12,7 @@ spec:
       parameters:
         - name: cluster.domain
           value: apps.cluster-dqxwv.dqxwv.gcp.redhatworkshops.io
-    path: Everything
+    path: rhdh2vm-demo-deploy
     repoURL: 'https://github.com/pablo-preciado/testing-helm-deployment.git'
     targetRevision: HEAD
   syncPolicy:

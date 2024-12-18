@@ -1,4 +1,0 @@
-apiVersion: v2
-name: my-demo-dev-hub-deploy
-version: 0.1.0
-description: A Helm chart for deploying the operators needed for my demo
