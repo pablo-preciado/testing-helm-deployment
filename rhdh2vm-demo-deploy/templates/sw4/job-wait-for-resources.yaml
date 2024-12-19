@@ -1,8 +1,7 @@
 kind: Job
 apiVersion: batch/v1
 metadata:
-  generateName: wait-for-resources-job-
-  #name: wait-for-resources-job
+  name: wait-for-resources-job
   namespace: openshift-gitops
   annotations:
     argocd.argoproj.io/sync-wave: "4"
