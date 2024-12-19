@@ -12,6 +12,16 @@ spec:
       parameters:
         - name: cluster.domain
           value: <here-goes-your-cluster-domain>
+        - name: github.appId
+          value: <here-goes-your-github-app-id>
+        - name: github.clientId
+          value: <here-goes-your-github-client-id>
+        - name: github.clientSecret
+          value: <here-goes-your-github-client-secret>
+        - name: github.privateKey
+          value: <here-goes-your-github-private-key>
+        - name: auth.sessionSecret
+          value: <here-goes-your-authetication-secret>
     path: rhdh2vm-demo-deploy
     repoURL: 'https://github.com/pablo-preciado/testing-helm-deployment.git'
     targetRevision: HEAD
