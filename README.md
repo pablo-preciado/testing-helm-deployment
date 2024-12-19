@@ -26,6 +26,8 @@ If you also want to modify the Github relate variables you can do it by adding a
           value: d88e-895e-ewq9-po0i
         - name: github.privateKey
           value: h4j32lkhc81nd92n19x1nhcwelncloa
+        - name: auth.sessionSecret
+          value: alcaparra
 ```
 
 You can add the Application using OpenShift GUI, ArgoCD GUI or with `oc` command line with the command `oc apply -f rhdh2vm-demo-deploy-application.yaml`. After sometime almost all resources will be ready except for the developer hub instance. For deploying RHDH you'll need to modify the `secrets-rhdh` in the `rhdh-operator` namespace with the command `oc edit secret/secrets-rhdh -n rhdh-operator`, add the Github variables and now you can deploy the RHDH instance (there is a definition template in /to-be-added/sw6/backstage.yaml).
