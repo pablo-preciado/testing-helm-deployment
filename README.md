@@ -38,3 +38,9 @@ You can add the Application using OpenShift GUI, ArgoCD GUI or with `oc` command
 - Substitute github for gitlab in RHDH secret and configuration
 - Do the full deployment
 - Check if an additional worker is needed
+
+Ha cambiado:
+ - Dynamic plugins
+ - AppConfig, aquí va el token
+ - En gitlab hay un repo que ha importado de github, el lo ha hecho con la GUI
+ - En el rhdh secret hay que actualizarlo
