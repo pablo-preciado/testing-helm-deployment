@@ -3,6 +3,8 @@ github:
   clientId: CHANGE
   clientSecret: CHANGE
   privateKey: CHANGE
+auth:
+  sessionSecret: CHANGE
 cluster:
   domain: apps.cluster-grlrs.grlrs.gcp.redhatworkshops.io
 aap:
