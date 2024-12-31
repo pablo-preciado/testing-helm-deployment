@@ -9,7 +9,12 @@ metadata:
 spec:
   chart:
     values:
+      gitlab-zoekt:
+        install: false
+      gitlab-runner:
+        install: true
       prometheus:
+        install: false
         alertmanager:
           enabled: false
         pushgateway:
@@ -21,6 +26,16 @@ spec:
       certmanager:
         install: false
       global:
+        pages:
+          enabled: false
+        gitaly:
+          enabled: false
+        registry:
+          enabled: false
+        minio:
+          enabled: false
+        praefect:
+          enabled: false
         kas:
           enabled: false
         hosts:
