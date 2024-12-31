@@ -13,8 +13,6 @@ spec:
         install: false
       prometheus:
         install: false
-      nginx-ingress:
-        enabled: false
       certmanager:
         install: false
       global:
