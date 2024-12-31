@@ -9,17 +9,18 @@ metadata:
 spec:
   chart:
     values:
-      gitlab-runner:
-        install: false
       prometheus:
-        install: false
+        alertmanager:
+          enabled: false
+        pushgateway:
+          enabled: false
+        server:
+          enabled: false
+      nginx-ingress:
+        enabled: false
       certmanager:
         install: false
       global:
-        registry:
-          enabled: false
-        minio:
-          enabled: false
         kas:
           enabled: false
         hosts:
