@@ -29,7 +29,7 @@ spec:
         pages:
           enabled: false
         gitaly:
-          enabled: false
+          enabled: true
         registry:
           enabled: false
         minio:
