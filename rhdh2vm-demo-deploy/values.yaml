@@ -26,6 +26,12 @@ gitlab:
   operatorGroupName: gitlab-system-operator-group
   subscriptionName: gitlab-operator-kubernetes
   instanceName: gitlab
+  repo1: pulular
+  repo2: engobe
+github:
+  pat: fill-with-your-pat
+  repo1: https://github.com/pablo-preciado/aap-ocpv
+  repo2: https://github.com/pablo-preciado/testing-helm-deployment
 openshiftVirtualization:
   namespaceName: openshift-cnv
   operatorGroupName: openshift-cnv-operatorgroup

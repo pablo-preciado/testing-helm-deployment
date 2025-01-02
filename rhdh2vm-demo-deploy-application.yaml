@@ -12,6 +12,8 @@ spec:
       parameters:
         - name: cluster.domain
           value: <here-goes-your-cluster-domain>
+        - name: github.pat
+          value: <here-goes-your-github-pat>
         - name: github.appId
           value: <here-goes-your-github-app-id>
         - name: github.clientId

@@ -1,9 +1,10 @@
 #!/bin/bash
 
 # Variables
-GITLAB_URL="https://gitlab.apps.cluster-vp7mj.vp7mj.gcp.redhatworkshops.io"
+GITLAB_URL="https://gitlab.apps.cluster-v4tjz.v4tjz.gcp.redhatworkshops.io/"
 ROOT_USER="root"
-ROOT_PASS="fZrEMvDqlEp14CE3ipMUbL3vBnMBOjDnHd4j9502KWJAfpXACVNHgahPWqWdNtBK"
+ROOT_PASS="myDes3qjBrVkohz51dMGUmKt3UhN3o96gsl79OmLElYq8t8nI4O0N4X4zOYmtQ9S"
+GITHUB_PAT=''
 GITHUB_REPO_1="https://github.com/pablo-preciado/aap-ocpv"
 GITHUB_REPO_2="https://github.com/pablo-preciado/testing-helm-deployment"
 
@@ -22,62 +23,90 @@ fi
 
 echo "GitLab authentication successful. Token: $GITLAB_TOKEN"
 
+# Create user1
+echo "Creating user1..."
+CREATE_USER=$(curl -s --header "Authorization: Bearer $GITLAB_TOKEN" \
+  --header "Content-Type: application/json" \
+  --request POST "$GITLAB_URL/api/v4/users" \
+  --data "$(cat <<EOF
+{
+  "email": "user1@example.com",
+  "username": "user1",
+  "name": "User One",
+  "password": "$ROOT_PASS",
+  "skip_confirmation": true
+}
+EOF
+)")
+
+echo "User1 creation response: $CREATE_USER"
+
+USER_ID=$(echo "$CREATE_USER" | jq -r '.id')
+if [ -z "$USER_ID" ] || [ "$USER_ID" == "null" ]; then
+  echo "Failed to create user1. Response: $CREATE_USER"
+  exit 1
+fi
+
+echo "User1 created successfully. User ID: $USER_ID"
+
 # Enable GitHub import capability
 echo "Enabling GitHub import capability..."
 curl -s --header "Authorization: Bearer $GITLAB_TOKEN" \
   --request PUT "$GITLAB_URL/api/v4/application/settings" \
-  --data "import_sources[]=github"
-
-echo "GitHub import capability enabled."
+  --data "import_sources[]=github" > /dev/null
 
 echo "GitHub import capability enabled."
 
 # Import GitHub repositories
 echo "Importing GitHub repository 1: $GITHUB_REPO_1"
+
+# Retrieve repository details
+GITHUB_REPO_API=$(echo "$GITHUB_REPO_1" | sed -E 's|https://github.com/||')
+REPO_DETAILS=$(curl -s "https://api.github.com/repos/$GITHUB_REPO_API")
+
+# Extract the numeric repository ID
+REPO_ID=$(echo "$REPO_DETAILS" | jq -r '.id')
+
+echo "Repository ID: $REPO_ID"
+
 IMPORT_REPO_1=$(curl -s --header "Authorization: Bearer $GITLAB_TOKEN" \
   --header "content-type: application/json" \
   --request POST "$GITLAB_URL/api/v4/import/github" \
-  --data '{
-    "new_name": "importtest",
-    "github_hostname": "https://github.example.com"
-}')
+  --data "$(cat <<EOF
+{
+  "personal_access_token": "$GITHUB_PAT",
+  "repo_id": "$REPO_ID",
+  "target_namespace": "user1",
+  "new_name": "maju"
+}
+EOF
+)")
 
-exit 1
+echo $IMPORT_REPO_1
 
-# https://docs.gitlab.com/ee/api/import.html 
-
-curl --request POST \
-  --url "https://gitlab.example.com/api/v4/import/github" \
-  --header "content-type: application/json" \
-  --header "Authorization: Bearer <your_access_token>" \
-  --data '{
-    "personal_access_token": "aBc123abC12aBc123abC12abC123+_A/c123",
-    "repo_id": "12345",
-    "target_namespace": "group/subgroup",
-    "new_name": "NEW-NAME",
-    "github_hostname": "https://github.example.com",
-    "optional_stages": {
-      "single_endpoint_notes_import": true,
-      "attachments_import": true,
-      "collaborators_import": true
-    }
-}'
-
-
-if echo "$IMPORT_REPO_1" | grep -q '"message":"403 Forbidden"'; then
-  echo "Failed to import GitHub repository 1. Response: $IMPORT_REPO_1"
-  exit 1
-fi
-
+# Import GitHub repositories
 echo "Importing GitHub repository 2: $GITHUB_REPO_2"
-IMPORT_REPO_2=$(curl -s --header "Authorization: Bearer $GITLAB_TOKEN" \
-  --request POST "$GITLAB_URL/api/v4/projects" \
-  --data "name=$(basename $GITHUB_REPO_2 .git)" \
-  --data "import_url=$GITHUB_REPO_2")
 
-if echo "$IMPORT_REPO_2" | grep -q '"message":"403 Forbidden"'; then
-  echo "Failed to import GitHub repository 2. Response: $IMPORT_REPO_2"
-  exit 1
-fi
+# Retrieve repository details
+GITHUB_REPO_API=$(echo "$GITHUB_REPO_2" | sed -E 's|https://github.com/||')
+REPO_DETAILS=$(curl -s "https://api.github.com/repos/$GITHUB_REPO_API")
+
+# Extract the numeric repository ID
+REPO_ID=$(echo "$REPO_DETAILS" | jq -r '.id')
+
+echo "Repository ID: $REPO_ID"
+
+IMPORT_REPO_2=$(curl -s --header "Authorization: Bearer $GITLAB_TOKEN" \
+  --header "content-type: application/json" \
+  --request POST "$GITLAB_URL/api/v4/import/github" \
+  --data "$(cat <<EOF
+{
+  "personal_access_token": "$GITHUB_PAT",
+  "repo_id": "$REPO_ID",
+  "target_namespace": "user1",
+  "new_name": "mana"
+}
+EOF
+)")
 
 echo "GitHub repositories imported successfully."
