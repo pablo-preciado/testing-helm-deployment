@@ -25,6 +25,7 @@ gitlab:
   namespaceName: gitlab-system
   operatorGroupName: gitlab-system-operator-group
   subscriptionName: gitlab-operator-kubernetes
+  version: 8.6.3
   instanceName: gitlab
   repo1: pulular
   repo2: engobe
