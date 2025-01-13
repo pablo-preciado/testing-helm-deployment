@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Variables
-GITLAB_URL="https://gitlab.apps.cluster-v4tjz.v4tjz.gcp.redhatworkshops.io/"
+GITLAB_URL="https://gitlab.apps.cluster-jqv2z.jqv2z.gcp.redhatworkshops.io"
 ROOT_USER="root"
-ROOT_PASS="myDes3qjBrVkohz51dMGUmKt3UhN3o96gsl79OmLElYq8t8nI4O0N4X4zOYmtQ9S"
+ROOT_PASS="K1xZVRdxgY8OBbH6LyFQD62uLNsqULtiN13JXJMUcirJlYZ7D2jNnpidMxkH3Sbz"
 GITHUB_PAT=''
 GITHUB_REPO_1="https://github.com/pablo-preciado/aap-ocpv"
 GITHUB_REPO_2="https://github.com/pablo-preciado/testing-helm-deployment"
@@ -23,6 +23,15 @@ fi
 
 echo "GitLab authentication successful. Token: $GITLAB_TOKEN"
 
+# Enable GitHub import capability
+echo "Enabling GitHub import capability..."
+
+curl -s --header "Authorization: Bearer $GITLAB_TOKEN" \
+  --request PUT "$GITLAB_URL/api/v4/application/settings" \
+  --data "import_sources[]=github" > /dev/null
+
+echo "GitHub import capability enabled."
+
 # Create user1
 echo "Creating user1..."
 CREATE_USER=$(curl -s --header "Authorization: Bearer $GITLAB_TOKEN" \
@@ -39,8 +48,6 @@ CREATE_USER=$(curl -s --header "Authorization: Bearer $GITLAB_TOKEN" \
 EOF
 )")
 
-echo "User1 creation response: $CREATE_USER"
-
 USER_ID=$(echo "$CREATE_USER" | jq -r '.id')
 if [ -z "$USER_ID" ] || [ "$USER_ID" == "null" ]; then
   echo "Failed to create user1. Response: $CREATE_USER"
@@ -48,14 +55,6 @@ if [ -z "$USER_ID" ] || [ "$USER_ID" == "null" ]; then
 fi
 
 echo "User1 created successfully. User ID: $USER_ID"
-
-# Enable GitHub import capability
-echo "Enabling GitHub import capability..."
-curl -s --header "Authorization: Bearer $GITLAB_TOKEN" \
-  --request PUT "$GITLAB_URL/api/v4/application/settings" \
-  --data "import_sources[]=github" > /dev/null
-
-echo "GitHub import capability enabled."
 
 # Import GitHub repositories
 echo "Importing GitHub repository 1: $GITHUB_REPO_1"
@@ -67,7 +66,7 @@ REPO_DETAILS=$(curl -s "https://api.github.com/repos/$GITHUB_REPO_API")
 # Extract the numeric repository ID
 REPO_ID=$(echo "$REPO_DETAILS" | jq -r '.id')
 
-echo "Repository ID: $REPO_ID"
+echo "Extracted Github repository ID: $REPO_ID"
 
 IMPORT_REPO_1=$(curl -s --header "Authorization: Bearer $GITLAB_TOKEN" \
   --header "content-type: application/json" \
@@ -82,7 +81,7 @@ IMPORT_REPO_1=$(curl -s --header "Authorization: Bearer $GITLAB_TOKEN" \
 EOF
 )")
 
-echo $IMPORT_REPO_1
+# echo $IMPORT_REPO_1
 
 # Import GitHub repositories
 echo "Importing GitHub repository 2: $GITHUB_REPO_2"
@@ -94,7 +93,7 @@ REPO_DETAILS=$(curl -s "https://api.github.com/repos/$GITHUB_REPO_API")
 # Extract the numeric repository ID
 REPO_ID=$(echo "$REPO_DETAILS" | jq -r '.id')
 
-echo "Repository ID: $REPO_ID"
+echo "Extracted Github repository ID: $REPO_ID"
 
 IMPORT_REPO_2=$(curl -s --header "Authorization: Bearer $GITLAB_TOKEN" \
   --header "content-type: application/json" \
