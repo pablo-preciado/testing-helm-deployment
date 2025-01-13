@@ -61,7 +61,7 @@ spec:
 
               echo "Waiting for Ansible Automation Platform CR..."
               while true; do
-                STATUS=$(oc get ansibleautomationplatform {{ .Values.aap.instanceName }} -n {{ .Values.aap.namespaceName }} -o jsonpath='{.status.conditions[?(@.type=="Successful")].status}' 2>/dev/null)
+                STATUS=$(oc get ansibleautomationplatform {{ .Values.aap.instanceName }} -n {{ .Values.aap.namespaceName }} -o jsonpath='{.status.conditions[?(@.type=="Running")].status}' 2>/dev/null)
                 if [[ "$STATUS" == "True" ]]; then
                   echo "Ansible Automation Platform CR is ready."
                   break
@@ -72,7 +72,7 @@ spec:
 
               echo "Waiting for Ansible Automation Controller CR..."
               while true; do
-                STATUS=$(oc get automationcontroller {{ .Values.aap.instanceName }}-controller -n {{ .Values.aap.namespaceName }} -o jsonpath='{.status.conditions[?(@.type=="Running")].status}' 2>/dev/null)
+                STATUS=$(oc get automationcontroller {{ .Values.aap.instanceName }}-controller -n {{ .Values.aap.namespaceName }} -o jsonpath='{.status.conditions[?(@.type=="Successful")].status}' 2>/dev/null)
                 if [[ "$STATUS" == "True" ]]; then
                   echo "Ansible Automation Controller CR is ready."
                   break
