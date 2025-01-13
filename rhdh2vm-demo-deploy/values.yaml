@@ -5,6 +5,19 @@ github:
   privateKey: CHANGE
 auth:
   sessionSecret: CHANGE
+rhn:
+  username: changeme
+  password: changeme
+  poolId: changeme
+  clientId: changeme
+  clientSecret: changeme
+automationhub:
+  url: https://console.redhat.com/api/automation-hub/content/published/
+  authUrl: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+  apiToken: changeme
+ocp:
+  apiUrl: changeme
+  apiToken: changeme
 cluster:
   domain: apps.cluster-grlrs.grlrs.gcp.redhatworkshops.io
 aap:
@@ -17,7 +30,7 @@ developerhub:
   operatorGroupName: rhdh-operatorgroup
   subscriptionName: rhdh2vm
   appConfigConfigMapName: my-backstage-appconfig-developer-hub
-  appConfigConfigMapkey: my.app-config.yaml
+  appConfigConfigMapkey: my-app-config.yaml
   dynamicPluginsConfigMapName: my-backstage-dynamic-plugins-developer-hub
   instanceName: developer-hub
   rhdhSecretName: secrets-rhdh

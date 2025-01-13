@@ -14,16 +14,26 @@ spec:
           value: <here-goes-your-cluster-domain>
         - name: github.pat
           value: <here-goes-your-github-pat>
-        - name: github.appId
-          value: <here-goes-your-github-app-id>
-        - name: github.clientId
-          value: <here-goes-your-github-client-id>
-        - name: github.clientSecret
-          value: <here-goes-your-github-client-secret>
-        - name: github.privateKey
-          value: <here-goes-your-github-private-key>
-        - name: auth.sessionSecret
-          value: <here-goes-your-authetication-secret>
+        - name: rhn.username
+          value: <here-goes-your-rhn-username>
+        - name: rhn.password
+          value: <here-goes-your-rhn-password>
+        - name: rhn.poolId
+          value: <here-goes-your-rhn-poolId>
+        - name: rhn.clientId
+          value: <here-goes-your-rhn-clientId>
+        - name: rhn.clientSecret
+          value: <here-goes-your-rhn-clientSecret>
+        - name: automationhub.url
+          value: <here-goes-your-automationhub-url>
+        - name: automationhub.authUrl
+          value: <here-goes-your-automationhub-authUrl>
+        - name: automationhub.apiToken
+          value: <here-goes-your-automationhub-apiToken>
+        - name: ocp.apiUrl
+          value: <here-goes-your-ocp-apiUrl>
+        - name: ocp.apiToken
+          value: <here-goes-your-ocp-apiToken>
     path: rhdh2vm-demo-deploy
     repoURL: 'https://github.com/pablo-preciado/testing-helm-deployment.git'
     targetRevision: HEAD
