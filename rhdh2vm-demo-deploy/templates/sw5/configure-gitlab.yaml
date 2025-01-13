@@ -82,6 +82,8 @@ spec:
               
               echo "GitHub import capability enabled."
               
+              sleep 30
+              
               # Import GitHub repositories
               echo "Importing GitHub repository 1-> $GITHUB_REPO_1"
               
@@ -102,7 +104,6 @@ spec:
 
               echo $IMPORT_REPO_1
               
-              _
               echo "Importing GitHub repository 2-> $GITHUB_REPO_2"
               
               # Retrieve repository details

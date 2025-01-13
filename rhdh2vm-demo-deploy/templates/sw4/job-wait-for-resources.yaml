@@ -70,4 +70,15 @@ spec:
                 sleep 5
               done
 
+              echo "Waiting for Ansible Automation Controller CR..."
+              while true; do
+                STATUS=$(oc get automationcontroller {{ .Values.aap.instanceName }}-controller -n {{ .Values.aap.namespaceName }} -o jsonpath='{.status.conditions[?(@.type=="Running")].status}' 2>/dev/null)
+                if [[ "$STATUS" == "True" ]]; then
+                  echo "Ansible Automation Controller CR is ready."
+                  break
+                fi
+                echo "Retrying Ansible Automation Controller CR readiness check..."
+                sleep 5
+              done
+
               echo "All resources are fully deployed."
