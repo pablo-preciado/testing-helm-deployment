@@ -27,7 +27,7 @@ spec:
             - '-c'
             - |
               # Replace with your Ansible Automation Platform details
-              AAP_URL=$(oc get routes {{ .Values.aap.instanceName }} -n {{ .Values.aap.namespaceName }} -o jsonpath='{.spec.host}')
+              AAP_URL="https://$(oc get routes {{ .Values.aap.instanceName }} -n {{ .Values.aap.namespaceName }} -o jsonpath='{.spec.host}')"
               
               echo "AAP_URL is $AAP_URL"
 
