@@ -1,7 +1,7 @@
 kind: Job
 apiVersion: batch/v1
 metadata:
-  name: create-secret-for-rhdh
+  name: create-realm-import
   namespace: openshift-gitops
   annotations:
     argocd.argoproj.io/sync-wave: "5"
