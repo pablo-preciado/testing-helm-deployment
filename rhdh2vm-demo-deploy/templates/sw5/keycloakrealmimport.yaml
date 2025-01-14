@@ -82,7 +82,7 @@ spec:
           validateSignature: "false"
           tokenUrl: https://{{ .Values.gitlab.instanceName }}.{{ .Values.cluster.domain }}/oauth/token
           acceptsPromptNoneForwardFromClient: "false"
-          clientId: "{{ (lookup "v1" "Secret" .Values.openshift-gitops "gitlab-oauth-secret").data.client_id | b64dec }}"
+          clientId: "{{ (lookup "v1" "Secret" .Values.openshift-gitops "gitlab-oauth-secret").data.client_id | b64dec | default "placeholder-client-id" }}"
           uiLocales: "false"
           isAccessTokenJWT: "false"
           filteredByClaim: "false"
@@ -97,6 +97,6 @@ spec:
           disableUserInfo: "false"
           sendIdTokenOnLogout: "true"
           syncMode: LEGACY
-          clientSecret: "{{ (lookup "v1" "Secret" .Values.openshift-gitops "gitlab-oauth-secret").data.client_secret | b64dec }}"
+          clientSecret: "{{ (lookup "v1" "Secret" .Values.openshift-gitops "gitlab-oauth-secret").data.client_secret | b64dec | default "placeholder-client-id" }}"
           passMaxAge: "false"
           allowedClockSkew: "0"
