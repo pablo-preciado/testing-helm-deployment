@@ -36,7 +36,7 @@ spec:
               GITHUB_REPO_2="{{ .Values.github.repo2 }}"
               GITLAB_REPO_2="{{ .Values.gitlab.repo2 }}"
               KEYCLOAK_APPLICATION_NAME="keycloak"
-              KEYCLOAK_REDIRECT_URI="https://keycloak.apps.cluster-4hxrj.4hxrj.gcp.redhatworkshops.io"
+              KEYCLOAK_REDIRECT_URI="https://keycloak.{{ .Values.cluster.domain }}/realms/backstage/broker/GitlabOIDC/endpoint"
 
               # Authenticate and get GitLab access token
               echo "Authenticating with GitLab..."

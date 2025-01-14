@@ -28,59 +28,23 @@ spec:
             - |
               # Replace with your Ansible Automation Platform details
               AAP_URL="https://$(oc get routes {{ .Values.aap.instanceName }} -n {{ .Values.aap.namespaceName }} -o jsonpath='{.spec.host}')"
-              
-              echo "AAP_URL is $AAP_URL"
-
               CONTROLLER_API_URL="$AAP_URL/api/controller/v2"
               GATEWAY_API_URL="$AAP_URL/api/gateway/v1"
               AAP_USERNAME="admin"
               AAP_PASSWORD=$(oc get secret {{ .Values.aap.instanceName }}-admin-password -n {{ .Values.aap.namespaceName }} -o jsonpath='{.data.password}' | base64 -d)
-              
-              echo "AAP_PASSWORD is $AAP_PASSWORD"
-
               # Subscription data
               RHN_USERNAME={{ .Values.rhn.username }}
-
-              echo "RHN_USERNAME is $RHN_USERNAME"
-
               RHN_PASSWORD={{ .Values.rhn.password }}
-
-              echo "RHN_PASSWORD is $RHN_PASSWORD"
-
               POOL_ID={{ .Values.rhn.poolId }}
-
-              echo "POOL_ID is $POOL_ID"
-
               RHN_CLIENT_ID={{ .Values.rhn.clientId }}
-
-              echo "RHN_CLIENT_ID is $RHN_CLIENT_ID"
-
               RHN_CLIENT_SECRET={{ .Values.rhn.clientSecret }}
-
-              echo "RHN_CLIENT_SECRET is $RHN_CLIENT_SECRET"
-
               # Credential creation details
               AUTOMATION_HUB_URL={{ .Values.automationhub.url }}
-
-              echo "AUTOMATION_HUB_URL is $AUTOMATION_HUB_URL"
-
               AUTOMATION_HUB_AUTH_URL={{ .Values.automationhub.authUrl }}
-
-              echo "AUTOMATION_HUB_AUTH_URL is $AUTOMATION_HUB_AUTH_URL"
-
               AUTOMATION_HUB_API_TOKEN={{ .Values.automationhub.apiToken }}
-
-              echo "AUTOMATION_HUB_API_TOKEN is $AUTOMATION_HUB_API_TOKEN"
-
               # Other variables needed
               OCP_API_URL={{ .Values.ocp.apiUrl }}
-
-              echo "OCP_API_URL is $OCP_API_URL"
-
               OCP_API_TOKEN={{ .Values.ocp.apiToken }}
-
-              echo "OCP_API_TOKEN is $OCP_API_TOKEN"
-
 
               # Authenticate in Automation controller
               echo "Controller authentication"
