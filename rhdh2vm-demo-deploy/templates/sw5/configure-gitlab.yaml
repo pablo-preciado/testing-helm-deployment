@@ -87,12 +87,26 @@ spec:
               
               APPLICATION_ID=$(echo $APPLICATION_RESPONSE | python3 -c "import sys, json; print(json.load(sys.stdin)['id'])")
               
+              # Extract the client_id and client_secret using Python
+              CLIENT_ID=$(echo "$APPLICATION_RESPONSE" | python3 -c "import sys, json; print(json.load(sys.stdin)['application_id'])")
+              CLIENT_SECRET=$(echo "$APPLICATION_RESPONSE" | python3 -c "import sys, json; print(json.load(sys.stdin)['secret'])")
+
               if [ -z "$APPLICATION_ID" ] || [ "$APPLICATION_ID" == "null" ]; then
                 echo "Failed to create the application. Response: $APPLICATION_RESPONSE"
                 exit 1
               fi
               
               echo "Application created successfully. ID: $APPLICATION_ID"
+              echo "Application Client ID: $CLIENT_ID"
+              echo "Application Client Secret: $CLIENT_SECRET"
+
+              # Create an OpenShift secret to store the client_id and client_secret
+              echo "Creating OpenShift secret..."
+              oc create secret generic gitlab-oauth-secret \
+                --from-literal=client_id=$CLIENT_ID \
+                --from-literal=client_secret=$CLIENT_SECRET -n openshift-gitops
+              
+              echo "OpenShift secret created successfully."
 
               sleep 30
 

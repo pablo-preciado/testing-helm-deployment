@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Variables
-GITLAB_URL="https://gitlab.apps.cluster-vvnkz.vvnkz.gcp.redhatworkshops.io"
+GITLAB_URL="https://gitlab.apps.cluster-459zx.459zx.gcp.redhatworkshops.io"
 ROOT_USER="root"
-ROOT_PASS="4R8EwoXfrlChXgiK8w99uxL2zQsujdCyY4VYKEQ6cXHrIxQEdGcb8S2hWlndIMRB"
+ROOT_PASS="LLRRrRbtX1BA2kmAuY5wsMNP1tExHOlMzM5ft63LhQTdf2T0BfQTjvmAGN9VtG5K"
 GITHUB_PAT=''
 GITHUB_REPO_1="https://github.com/pablo-preciado/aap-ocpv"
 GITHUB_REPO_2="https://github.com/pablo-preciado/testing-helm-deployment"
@@ -56,7 +56,7 @@ fi
 
 echo "User1 created successfully. User ID: $USER_ID"
 
-# Create a new application with specified name, redirect URI, and scopes
+# Create a new application for keycloak integration
 APPLICATION_NAME="keycloak"
 REDIRECT_URI="https://keycloak.apps.cluster-4hxrj.4hxrj.gcp.redhatworkshops.io"
 SCOPES="openid api read_api"
@@ -70,12 +70,18 @@ APPLICATION_RESPONSE=$(curl -s --request POST "$GITLAB_URL/api/v4/applications" 
 
 APPLICATION_ID=$(echo $APPLICATION_RESPONSE | jq -r '.id')
 
+# Extract the client_id and client_secret using Python
+CLIENT_ID=$(echo "$APPLICATION_RESPONSE" | python3 -c "import sys, json; print(json.load(sys.stdin)['application_id'])")
+CLIENT_SECRET=$(echo "$APPLICATION_RESPONSE" | python3 -c "import sys, json; print(json.load(sys.stdin)['secret'])")
+
 if [ -z "$APPLICATION_ID" ] || [ "$APPLICATION_ID" == "null" ]; then
   echo "Failed to create the application. Response: $APPLICATION_RESPONSE"
   exit 1
 fi
 
 echo "Application created successfully. ID: $APPLICATION_ID"
+echo "Application Client ID: $CLIENT_ID"
+echo "Application Client Secret: $CLIENT_SECRET"
 
 # Import GitHub repositories
 echo "Importing GitHub repository 1: $GITHUB_REPO_1"
