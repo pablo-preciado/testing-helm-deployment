@@ -47,13 +47,13 @@ spec:
                   realm: backstage
                   enabled: true
                   users:
-                    - username: user1
-                      enabled: true
-                      emailVerified: true
-                      email: user1@example.com
-                      credentials:
-                        - type: password
-                          value: user1       
+                    #- username: user1
+                    #  enabled: true
+                    #  emailVerified: true
+                    #  email: user1@example.com
+                    #  credentials:
+                    #    - type: password
+                    #      value: user1       
                     - username: service-account-backstage
                       emailVerified: false
                       enabled: true
