@@ -35,15 +35,13 @@ spec:
               GITLAB_REPO_1="{{ .Values.gitlab.repo1 }}"
               GITHUB_REPO_2="{{ .Values.github.repo2 }}"
               GITLAB_REPO_2="{{ .Values.gitlab.repo2 }}"
-              
+              KEYCLOAK_APPLICATION_NAME="keycloak"
+              KEYCLOAK_REDIRECT_URI="https://keycloak.apps.cluster-4hxrj.4hxrj.gcp.redhatworkshops.io"
+
               # Authenticate and get GitLab access token
               echo "Authenticating with GitLab..."
               GITLAB_AUTH_RESPONSE=$(curl -s --request POST "$GITLAB_URL/oauth/token" --data "grant_type=password" --data "username=$ROOT_USER" --data "password=$ROOT_PASS")
               GITLAB_TOKEN=$(echo "$GITLAB_AUTH_RESPONSE" | python3 -c "import sys, json; print(json.load(sys.stdin)['access_token'])")
-              
-              # Delete next two lines if everything works fine
-              #GITLAB_TOKEN=$(curl -s --request POST "$GITLAB_URL/oauth/token" --data "grant_type=password" --data "username=$ROOT_USER" --data "password=$ROOT_PASS" | grep -o '"access_token":"[^"]*' | cut -d: -f2 | tr -d '"')
-              #GITLAB_TOKEN=$(curl -s --request POST "$GITLAB_URL/oauth/token" --data "grant_type=password" --data "username=$ROOT_USER" --data "password=$ROOT_PASS" | jq -r '.access_token')
               
               if [ -z "$GITLAB_TOKEN" ] || [ "$GITLAB_TOKEN" == "null" ]; then
                 echo "Authentication failed. Check your credentials."
@@ -68,16 +66,33 @@ spec:
               
               USER_ID=$(echo "$CREATE_USER" | python3 -c "import sys, json; print(json.load(sys.stdin)['id'])")
 
-              # Delete next two following lines once everything works
-              #USER_ID=$(echo "$CREATE_USER" | sed -n 's/.*"id":\([0-9]*\).*/\1/p')
-              #USER_ID=$(echo "$CREATE_USER" | jq -r '.id')
-
               if [ -z "$USER_ID" ] || [ "$USER_ID" == "null" ]; then
                 echo "Failed to create user1. Response-> $CREATE_USER"
                 exit 1
               fi
               
               echo "User1 created successfully. User ID-> $USER_ID"
+  
+              # Create a new application for keycloak integration
+              
+              echo "Creating a new application in GitLab..."
+
+              SCOPES="openid api read_api"
+              
+              APPLICATION_RESPONSE=$(curl -s --request POST "$GITLAB_URL/api/v4/applications" \
+                --header "Authorization: Bearer $GITLAB_TOKEN" \
+                --data "name=$KEYCLOAK_APPLICATION_NAME" \
+                --data "redirect_uri=$KEYCLOAK_REDIRECT_URI" \
+                --data "scopes=$SCOPES")
+              
+              APPLICATION_ID=$(echo $APPLICATION_RESPONSE | python3 -c "import sys, json; print(json.load(sys.stdin)['id'])")
+              
+              if [ -z "$APPLICATION_ID" ] || [ "$APPLICATION_ID" == "null" ]; then
+                echo "Failed to create the application. Response: $APPLICATION_RESPONSE"
+                exit 1
+              fi
+              
+              echo "Application created successfully. ID: $APPLICATION_ID"
 
               sleep 30
 
@@ -90,11 +105,7 @@ spec:
               
               # Extract the numeric repository ID
               REPO_ID=$(echo "$REPO_DETAILS" | python3 -c "import sys, json; print(json.load(sys.stdin)['id'])")
-
-              # Delete next two lines once everything works
-              #REPO_ID=$(echo "$REPO_DETAILS" | grep -o '"id":\s*[0-9]*' | head -n 1 | awk -F ': ' '{print $2}')
-              #REPO_ID=$(echo "$REPO_DETAILS" | jq -r '.id')
-              
+             
               echo "Extracted Github repository ID-> $REPO_ID"
               
               IMPORT_REPO_1=$(curl -s --header "Authorization: Bearer $GITLAB_TOKEN" \
@@ -113,10 +124,6 @@ spec:
               # Extract the numeric repository ID
               
               REPO_ID=$(echo "$REPO_DETAILS" | python3 -c "import sys, json; print(json.load(sys.stdin)['id'])")
-
-              # Delete next two lines once everything works
-              #REPO_ID=$(echo "$REPO_DETAILS" | grep -o '"id":\s*[0-9]*' | head -n 1 | awk -F ': ' '{print $2}')
-              #REPO_ID=$(echo "$REPO_DETAILS" | jq -r '.id')
               
               echo "Extracted Github repository ID-> $REPO_ID"
               

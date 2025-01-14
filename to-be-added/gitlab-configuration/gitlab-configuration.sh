@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Variables
-GITLAB_URL="https://gitlab.apps.cluster-jqv2z.jqv2z.gcp.redhatworkshops.io"
+GITLAB_URL="https://gitlab.apps.cluster-vvnkz.vvnkz.gcp.redhatworkshops.io"
 ROOT_USER="root"
-ROOT_PASS="K1xZVRdxgY8OBbH6LyFQD62uLNsqULtiN13JXJMUcirJlYZ7D2jNnpidMxkH3Sbz"
+ROOT_PASS="4R8EwoXfrlChXgiK8w99uxL2zQsujdCyY4VYKEQ6cXHrIxQEdGcb8S2hWlndIMRB"
 GITHUB_PAT=''
 GITHUB_REPO_1="https://github.com/pablo-preciado/aap-ocpv"
 GITHUB_REPO_2="https://github.com/pablo-preciado/testing-helm-deployment"
@@ -55,6 +55,27 @@ if [ -z "$USER_ID" ] || [ "$USER_ID" == "null" ]; then
 fi
 
 echo "User1 created successfully. User ID: $USER_ID"
+
+# Create a new application with specified name, redirect URI, and scopes
+APPLICATION_NAME="keycloak"
+REDIRECT_URI="https://keycloak.apps.cluster-4hxrj.4hxrj.gcp.redhatworkshops.io"
+SCOPES="openid api read_api"
+
+echo "Creating a new application in GitLab..."
+APPLICATION_RESPONSE=$(curl -s --request POST "$GITLAB_URL/api/v4/applications" \
+  --header "Authorization: Bearer $GITLAB_TOKEN" \
+  --data "name=$APPLICATION_NAME" \
+  --data "redirect_uri=$REDIRECT_URI" \
+  --data "scopes=$SCOPES")
+
+APPLICATION_ID=$(echo $APPLICATION_RESPONSE | jq -r '.id')
+
+if [ -z "$APPLICATION_ID" ] || [ "$APPLICATION_ID" == "null" ]; then
+  echo "Failed to create the application. Response: $APPLICATION_RESPONSE"
+  exit 1
+fi
+
+echo "Application created successfully. ID: $APPLICATION_ID"
 
 # Import GitHub repositories
 echo "Importing GitHub repository 1: $GITHUB_REPO_1"
