@@ -83,7 +83,8 @@ spec:
                 --header "Authorization: Bearer $GITLAB_TOKEN" \
                 --data "name=$KEYCLOAK_APPLICATION_NAME" \
                 --data "redirect_uri=$KEYCLOAK_REDIRECT_URI" \
-                --data "scopes=$SCOPES")
+                --data "scopes=$SCOPES" \
+                --data "confidential=false")
               
               APPLICATION_ID=$(echo $APPLICATION_RESPONSE | python3 -c "import sys, json; print(json.load(sys.stdin)['id'])")
               

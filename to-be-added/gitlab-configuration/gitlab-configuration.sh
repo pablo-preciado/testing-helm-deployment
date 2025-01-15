@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Variables
-GITLAB_URL="https://gitlab.apps.cluster-459zx.459zx.gcp.redhatworkshops.io"
+GITLAB_URL="https://gitlab.apps.cluster-vvnkz.vvnkz.gcp.redhatworkshops.io"
 ROOT_USER="root"
-ROOT_PASS="LLRRrRbtX1BA2kmAuY5wsMNP1tExHOlMzM5ft63LhQTdf2T0BfQTjvmAGN9VtG5K"
+ROOT_PASS="ag0xvp5B2I9ltyvFXbAUFOmNNMtXwOcf9LSkIfxLSWIOSAX3dulTx1QVOWT9HRDP"
 GITHUB_PAT=''
 GITHUB_REPO_1="https://github.com/pablo-preciado/aap-ocpv"
 GITHUB_REPO_2="https://github.com/pablo-preciado/testing-helm-deployment"
@@ -57,16 +57,22 @@ fi
 echo "User1 created successfully. User ID: $USER_ID"
 
 # Create a new application for keycloak integration
-APPLICATION_NAME="keycloak"
-REDIRECT_URI="https://keycloak.apps.cluster-4hxrj.4hxrj.gcp.redhatworkshops.io"
+KEYCLOAK_APPLICATION_NAME="keycloak"
+KEYCLOAK_REDIRECT_URI="https://keycloak.apps.cluster-4hxrj.4hxrj.gcp.redhatworkshops.io"
 SCOPES="openid api read_api"
 
 echo "Creating a new application in GitLab..."
+#APPLICATION_RESPONSE=$(curl -s --request POST "$GITLAB_URL/api/v4/applications" \
+#  --header "Authorization: Bearer $GITLAB_TOKEN" \
+#  --data "name=$APPLICATION_NAME" \
+#  --data "redirect_uri=$REDIRECT_URI" \
+#  --data "scopes=$SCOPES")
 APPLICATION_RESPONSE=$(curl -s --request POST "$GITLAB_URL/api/v4/applications" \
   --header "Authorization: Bearer $GITLAB_TOKEN" \
-  --data "name=$APPLICATION_NAME" \
-  --data "redirect_uri=$REDIRECT_URI" \
-  --data "scopes=$SCOPES")
+  --data "name=$KEYCLOAK_APPLICATION_NAME" \
+  --data "redirect_uri=$KEYCLOAK_REDIRECT_URI" \
+  --data "scopes=$SCOPES" \
+  --data "confidential=false")
 
 APPLICATION_ID=$(echo $APPLICATION_RESPONSE | jq -r '.id')
 
