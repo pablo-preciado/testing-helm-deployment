@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Variables
-GITLAB_URL="https://gitlab.apps.cluster-vvnkz.vvnkz.gcp.redhatworkshops.io"
+GITLAB_URL="https://gitlab.apps.cluster-c78jh.c78jh.gcp.redhatworkshops.io"
 ROOT_USER="root"
-ROOT_PASS="ag0xvp5B2I9ltyvFXbAUFOmNNMtXwOcf9LSkIfxLSWIOSAX3dulTx1QVOWT9HRDP"
+ROOT_PASS="5gi9DqIsbbYZ6e97JxzGnxSswfBXTHT6YSmhUZ4st0jEXYe3ViQXJ2CCea4XeZ4S"
 GITHUB_PAT=''
 GITHUB_REPO_1="https://github.com/pablo-preciado/aap-ocpv"
 GITHUB_REPO_2="https://github.com/pablo-preciado/testing-helm-deployment"

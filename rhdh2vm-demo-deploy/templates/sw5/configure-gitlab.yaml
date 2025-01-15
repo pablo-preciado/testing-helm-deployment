@@ -102,11 +102,15 @@ spec:
               echo "Application Client Secret: $CLIENT_SECRET"
 
               # Create an OpenShift secret to store the client_id and client_secret
-              echo "Creating OpenShift secret..."
+
+              echo "Creating or updating OpenShift secret..."
               oc create secret generic gitlab-oauth-secret \
                 --from-literal=client_id=$CLIENT_ID \
-                --from-literal=client_secret=$CLIENT_SECRET -n openshift-gitops
+                --from-literal=client_secret=$CLIENT_SECRET -n openshift-gitops \
+                --dry-run=client -o yaml | oc apply -f -
               
+              echo "OpenShift secret created or updated successfully."
+
               echo "OpenShift secret created successfully."
 
               sleep 30
