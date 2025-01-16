@@ -9,7 +9,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "4"
 data:
-  my.app-config.yaml: |
+  my-app-config.yaml: |
     app:
       baseUrl: ${BACKSTAGE_URL}
     argocd:
@@ -22,59 +22,53 @@ data:
         type: config
       waitCycles: 25
     auth:
-      environment: development     
+      environment: production     
+      session:
+        secret: 
+          'authsessionsecret' 
       providers:
         oidc:
-          development:
+          production:
             clientId: ${KEYCLOAK_CLIENTID}
             clientSecret: ${KEYCLOAK_CLIENTSECRET}
-            metadataUrl: ${KEYCLOAK_URL}
+            metadataUrl: ${KEYCLOAK_URL}         
             prompt: auto
-      session:
-        secret: 'authsessionsecret'            
+    csp:
+      connect-src:
+      - '''self'''
+      - 'http:'
+      - 'https:'
+      - 'data:'
+      img-src:
+      - '''self'''
+      - 'data:'
+      script-src:
+      - '''self'''
+      - '''unsafe-inline'''
+      - '''unsafe-eval'''
+      script-src-elem:
+      - '''self'''
+      - '''unsafe-inline'''
+      - '''unsafe-eval'''
+    cors:
+      credentials: true
+      methods:
+      - GET
+      - POST
+      - PUT
+      - DELETE
+      origin: ${BACKSTAGE_URL}      
     backend:
       auth:
         keys:
         - secret: ${BACKEND_SECRET}
       baseUrl: ${BACKSTAGE_URL}
-      database:
-        client: pg
-        connection:
-          host: ${POSTGRES_HOST}
-          password: ${POSTGRES_ADMIN_PASSWORD}
-          port: ${POSTGRES_PORT}
-          user: ${POSTGRES_USER}
-      listen:
-        host: 0.0.0.0
-        port: 7007
-      reading:
-        allow:
-        - host: ${HOST_ALLOW}       
       cors:
-        credentials: true
-        methods:
-        - GET
-        - POST
-        - PUT
-        - DELETE
         origin: ${BACKSTAGE_URL}
-      csp:
-        connect-src:
-        - '''self'''
-        - 'http:'
-        - 'https:'
-        - 'data:'
-        img-src:
-        - '''self'''
-        - 'data:'
-        script-src:
-        - '''self'''
-        - '''unsafe-inline'''
-        - '''unsafe-eval'''
-        script-src-elem:
-        - '''self'''
-        - '''unsafe-inline'''
-        - '''unsafe-eval'''         
+      database:
+        connection:
+          password: ${POSTGRESQL_ADMIN_PASSWORD}
+          user: postgres
     catalog:
       locations:
       - rules:
@@ -97,20 +91,17 @@ data:
               seconds: 10
             timeout:
               seconds: 60
-        github:
-          providerId:
-            catalogPath: /catalog-info.yaml
-            filters:
-              branch: main
-            organization: janus-backstage
+        gitlab:
+          selfHosted:
+            host: ${GITLAB_HOST}
             schedule:
               frequency:
-                minutes: 1
+                seconds: 10
               timeout:
-                minutes: 3       
+                seconds: 60              
         keycloakOrg:
           default:
-            baseUrl: ${KEYCLOAK_URL_CATALOG}
+            baseUrl: ${KEYCLOAK_URL_CATALOG} 
             clientId: ${KEYCLOAK_CLIENTID} 
             clientSecret: ${KEYCLOAK_CLIENTSECRET} 
             loginRealm: backstage
@@ -121,7 +112,7 @@ data:
               initialDelay:
                 seconds: 15
               timeout:
-                minutes: 1                     
+                minutes: 1            
       rules:
       - allow:
         - Component
@@ -133,25 +124,22 @@ data:
         - User
     enabled:
       argocd: true
-      github: true
-      githubOrg: true
+      github: false
+      githubOrg: false
       gitlab: false
       jenkins: false
       keycloak: true
       kubernetes: true
-      ocm: false
+      ocm: true
       permission: false
       sonarqube: false
       techdocs: true
     integrations:
-      github:
-      - apps:
-        - appId: ${GITHUB_APPID}
-          clientId: ${GITHUB_CLIENTID}
-          clientSecret: ${GITHUB_CLIENTSECRET}
-          privateKey: ${GITHUB_PRIVATEKEY}  
-          webhookSecret: replaceme
-        host: github.com
+      gitlab:
+      - apiBaseUrl: https://${GITLAB_HOST}/api/v4
+        baseUrl: https://${GITLAB_HOST}
+        host: ${GITLAB_HOST}
+        token: ${GITLAB_TOKEN}        
     kubernetes:
       clusterLocatorMethods:
       - clusters:
@@ -178,7 +166,7 @@ data:
       rbac:
         admin:
           users:
-          - name: user:user1
+          - name: user:default/user1
     proxy:
       endpoints:
         /developer-hub:
@@ -194,6 +182,8 @@ data:
             X-Requested-With: XMLHttpRequest
           secure: false
           target: https://quay.io
+    quay:
+      uiUrl: https://quay.io
     scaffolder: null
     signInPage: oidc   
     techdocs:
