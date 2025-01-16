@@ -3,6 +3,9 @@ kind: Backstage
 metadata:
   name: developer-hub
   namespace: rhdh-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "7"
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
 spec:
   application:
     appConfig:
