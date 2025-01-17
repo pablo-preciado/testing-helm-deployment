@@ -3,12 +3,15 @@ kind: Backstage
 metadata:
   name: developer-hub
   namespace: rhdh-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "7"
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded  
 spec:
   application:
     appConfig:
       configMaps:
         - name: my-backstage-appconfig-developer-hub
-          key: my.app-config.yaml
+          key: my-app-config.yaml
     extraEnvs:
       envs:
         - name: NODE_TLS_REJECT_UNAUTHORIZED
@@ -21,6 +24,7 @@ spec:
     replicas: 1
     route:
       enabled: true
+      subdomain: backstage
     dynamicPluginsConfigMapName: my-backstage-dynamic-plugins-developer-hub
   database:
-    enableLocalDb: true   
+    enableLocalDb: true     
