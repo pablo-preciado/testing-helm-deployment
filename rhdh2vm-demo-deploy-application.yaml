@@ -11,11 +11,11 @@ spec:
     helm:
       parameters:
         - name: cluster.domain
-          value: apps.cluster-zb6tw.zb6tw.gcp.redhatworkshops.io
+          value: <here-goes-your-cluster-domain>
         - name: github.pat
-          value: https://github.com/sgutierr/catalog-entities
+          value: <here-goes-your-github-pat>
         - name: rhn.username
-          value: sgutierr@redhat.com
+          value: <here-goes-your-rhn-username>
         - name: rhn.password
           value: <here-goes-your-rhn-password>
         - name: rhn.poolId
@@ -31,9 +31,9 @@ spec:
         - name: automationhub.apiToken
           value: <here-goes-your-automationhub-apiToken>
         - name: ocp.apiUrl
-          value: https://api.cluster-zb6tw.zb6tw.gcp.redhatworkshops.io:644
+          value: <here-goes-your-ocp-apiUrl>
         - name: ocp.apiToken
-          value: sha256~9d01hdkMvsQ323Ja84KK4cfM8QNJNl0EhfgartkerlE
+          value: <here-goes-your-ocp-apiToken>
     path: rhdh2vm-demo-deploy
     repoURL: 'https://github.com/pablo-preciado/testing-helm-deployment.git'
     targetRevision: HEAD
