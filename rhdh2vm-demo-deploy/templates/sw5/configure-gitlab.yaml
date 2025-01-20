@@ -61,7 +61,7 @@ spec:
 
               # Create user1
               echo "Creating user1..."
-              CREATE_USER=$(curl -s --header "Authorization: Bearer $GITLAB_TOKEN" --header "Content-Type: application/json" --request POST "$GITLAB_URL/api/v4/users" --data '{"email": "user1@example.com", "username": "user1", "name": "User One", "password": "'"$ROOT_PASS"'", "skip_confirmation": true}')
+              CREATE_USER=$(curl -s --header "Authorization: Bearer $GITLAB_TOKEN" --header "Content-Type: application/json" --request POST "$GITLAB_URL/api/v4/users" --data '{"email": "user1@example.com", "username": "user1", "name": "User One", "password": "redhat1", "skip_confirmation": true}')
               
               echo "User1 creation response-> $CREATE_USER"
               
