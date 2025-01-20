@@ -173,7 +173,7 @@ data:
       rbac:
         admin:
           users:
-          - name: user:default/user1
+          - name: user:development/user1
     proxy:
       endpoints:
         /developer-hub:

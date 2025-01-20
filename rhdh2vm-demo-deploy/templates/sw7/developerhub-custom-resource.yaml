@@ -18,7 +18,7 @@ spec:
           value: '0'    
       secrets:
         - name: "secrets-rhdh"
-      mountPath: /opt/app-root/src
+      # mountPath: /opt/app-root/src
     extraFiles:
       mountPath: /opt/app-root/src
     replicas: 1
