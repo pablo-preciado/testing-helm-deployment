@@ -11,7 +11,7 @@ spec:
     appConfig:
       configMaps:
         - name: my-backstage-appconfig-developer-hub
-          key: my.app-config.yaml
+          key: my-app-config.yaml
     extraEnvs:
       envs:
         - name: NODE_TLS_REJECT_UNAUTHORIZED
@@ -24,6 +24,7 @@ spec:
     replicas: 1
     route:
       enabled: true
+      subdomain: backstage
     dynamicPluginsConfigMapName: my-backstage-dynamic-plugins-developer-hub
   database:
-    enableLocalDb: true   
+    enableLocalDb: true     

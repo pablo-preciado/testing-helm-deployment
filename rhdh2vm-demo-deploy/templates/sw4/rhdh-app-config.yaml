@@ -17,18 +17,17 @@ data:
       - instances:
         - name: main
           username: admin 
-          password: ${ARGOCD_PASSWORD}    
+          password: ${ARGOCD_PASSWORD}
           url: ${ARGOCD_URL}
         type: config
-      waitCycles: 25
     auth:
-      environment: production     
+      environment: development     
       session:
         secret: 
           'authsessionsecret' 
       providers:
         oidc:
-          production:
+          development:
             clientId: ${KEYCLOAK_CLIENTID}
             clientSecret: ${KEYCLOAK_CLIENTSECRET}
             metadataUrl: ${KEYCLOAK_URL}         
@@ -65,32 +64,29 @@ data:
       baseUrl: ${BACKSTAGE_URL}
       cors:
         origin: ${BACKSTAGE_URL}
+      listen:
+        host: 0.0.0.0
+        port: 7007        
       database:
         connection:
           password: ${POSTGRESQL_ADMIN_PASSWORD}
           user: postgres
+    reading:
+      allow:
+      - host: '*.apps.cluster-zb6tw.zb6tw.gcp.redhatworkshops.io'          
     catalog:
       locations:
       - rules:
         - allow:
           - Template
-        target: https://github.com/sgutierr/catalog-entities/blob/main/software-templates/showcase-templates.yaml
+        target: https://${GITLAB_HOST}/development/catalog-entities/blob/main/software-templates/showcase-templates.yaml
         type: url
       - rules:
         - allow:
           - Template
-        target: https://github.com/sgutierr/catalog-entities/blob/main/all.yaml
+        target: https://${GITLAB_HOST}/development/catalog-entities/blob/main/all.yaml
         type: url
       providers:
-        default:
-          kubernetesPluginRef: dev-cluster-infra
-          name: multiclusterhub
-          owner: group:rhdh
-          schedule:
-            frequency:
-              seconds: 10
-            timeout:
-              seconds: 60
         gitlab:
           selfHosted:
             host: ${GITLAB_HOST}
@@ -98,7 +94,18 @@ data:
               frequency:
                 seconds: 10
               timeout:
-                seconds: 60              
+                seconds: 60     
+        github:
+          providerId:
+            catalogPath: /catalog-info.yaml
+            filters:
+              branch: main
+            organization: janus-backstage
+            schedule:
+              frequency:
+                minutes: 1
+              timeout:
+                minutes: 3                         
         keycloakOrg:
           default:
             baseUrl: ${KEYCLOAK_URL_CATALOG} 
@@ -126,11 +133,11 @@ data:
       argocd: true
       github: false
       githubOrg: false
-      gitlab: false
+      gitlab: true
       jenkins: false
       keycloak: true
       kubernetes: true
-      ocm: true
+      ocm: false
       permission: false
       sonarqube: false
       techdocs: true
@@ -160,7 +167,7 @@ data:
         group: route.openshift.io
         plural: routes
       serviceLocatorMethod:
-        type: singleTenant
+        type: multiTenant
     permission:
       enabled: false
       rbac:
