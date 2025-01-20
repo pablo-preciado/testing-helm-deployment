@@ -130,4 +130,11 @@ spec:
                         clientSecret: $GITLAB_CLIENT_SECRET
                         passMaxAge: "false"
                         allowedClockSkew: "0"
+                      attributeMappings:
+                        - from: email
+                          to: email
+                        - from: name
+                          to: firstName
+                        - from: last_name
+                          to: lastName
               EOF
