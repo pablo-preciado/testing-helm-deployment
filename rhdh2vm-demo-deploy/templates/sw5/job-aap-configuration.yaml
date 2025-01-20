@@ -12,7 +12,7 @@ spec:
       restartPolicy: Never
       serviceAccountName: resources-checker
       containers:
-        - name: create-secret-for-rhdh
+        - name: configure-aap
           image: registry.redhat.io/openshift4/ose-cli
           securityContext:
             allowPrivilegeEscalation: false
