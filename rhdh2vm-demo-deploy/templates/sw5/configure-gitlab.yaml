@@ -97,7 +97,7 @@ spec:
               
               echo "Creating a new application in GitLab..."
 
-              SCOPES="openid api read_api profile email"
+              SCOPES="openid api read_api profile email read_user"
               
               APPLICATION_RESPONSE=$(curl -s --request POST "$GITLAB_URL/api/v4/applications" \
                 --header "Authorization: Bearer $GITLAB_TOKEN" \
