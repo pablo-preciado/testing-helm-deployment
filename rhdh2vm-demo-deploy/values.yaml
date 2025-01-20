@@ -42,6 +42,7 @@ gitlab:
   instanceName: gitlab
   repo1: pulular
   repo2: engobe
+  organizationName: development
 github:
   pat: fill-with-your-pat
   repo1: https://github.com/pablo-preciado/aap-ocpv
