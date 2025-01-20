@@ -16,7 +16,6 @@ automationhub:
   authUrl: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
   apiToken: changeme
 ocp:
-  apiUrl: changeme
   apiToken: changeme
 cluster:
   domain: apps.cluster-grlrs.grlrs.gcp.redhatworkshops.io
@@ -43,6 +42,7 @@ gitlab:
   repo1: pulular
   repo2: engobe
   organizationName: development
+  user1Password: redhat1!
 github:
   pat: fill-with-your-pat
   repo1: https://github.com/pablo-preciado/aap-ocpv
