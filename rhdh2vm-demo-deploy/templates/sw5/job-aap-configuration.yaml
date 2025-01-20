@@ -43,7 +43,7 @@ spec:
               AUTOMATION_HUB_AUTH_URL={{ .Values.automationhub.authUrl }}
               AUTOMATION_HUB_API_TOKEN={{ .Values.automationhub.apiToken }}
               # Other variables needed
-              OCP_API_URL={{ .Values.ocp.apiUrl }}
+              OCP_API_URL=$(oc get infrastructure cluster -o json | python3 -c "import sys, json; print(json.load(sys.stdin)['status']['apiServerURL'])")
               OCP_API_TOKEN={{ .Values.ocp.apiToken }}
 
               # Authenticate in Automation controller

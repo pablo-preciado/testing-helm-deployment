@@ -30,8 +30,6 @@ spec:
           value: <here-goes-your-automationhub-authUrl>
         - name: automationhub.apiToken
           value: <here-goes-your-automationhub-apiToken>
-        - name: ocp.apiUrl
-          value: <here-goes-your-ocp-apiUrl>
         - name: ocp.apiToken
           value: <here-goes-your-ocp-apiToken>
     path: rhdh2vm-demo-deploy
