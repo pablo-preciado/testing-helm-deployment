@@ -73,7 +73,26 @@ spec:
               fi
               
               echo "User1 created successfully. User ID-> $USER_ID"
-  
+
+              # Create an organization (group) in GitLab
+              echo "Creating organization (group) in GitLab..."
+              CREATE_GROUP=$(curl -s --header "Authorization: Bearer $GITLAB_TOKEN" --header "Content-Type: application/json" --request POST "$GITLAB_URL/api/v4/groups" --data '{"name": "'"$ORGANIZATION_NAME"'", "path": "'"$ORGANIZATION_NAME"'"}')
+
+              GROUP_ID=$(echo "$CREATE_GROUP" | python3 -c "import sys, json; print(json.load(sys.stdin)['id'])")
+
+              if [ -z "$GROUP_ID" ] || [ "$GROUP_ID" == "null" ]; then
+                echo "Failed to create organization. Response-> $CREATE_GROUP"
+                exit 1
+              fi
+
+              echo "Organization created successfully. Group ID-> $GROUP_ID"
+
+              # Add user1 as an owner of the group
+              echo "Adding user1 as an owner of the organization..."
+              ADD_OWNER=$(curl -s --header "Authorization: Bearer $GITLAB_TOKEN" --header "Content-Type: application/json" --request POST "$GITLAB_URL/api/v4/groups/$GROUP_ID/members" --data '{"user_id": '"$USER_ID"', "access_level": 50}')
+
+              echo "User1 added as owner of the organization. Response-> $ADD_OWNER"
+
               # Create a new application for keycloak integration
               
               echo "Creating a new application in GitLab..."
@@ -112,26 +131,8 @@ spec:
               
               echo "OpenShift secret created or updated successfully."
 
-              # Create an organization (group) in GitLab
-              echo "Creating organization (group) in GitLab..."
-              CREATE_GROUP=$(curl -s --header "Authorization: Bearer $GITLAB_TOKEN" --header "Content-Type: application/json" --request POST "$GITLAB_URL/api/v4/groups" --data '{"name": "'"$ORGANIZATION_NAME"'", "path": "'"$ORGANIZATION_NAME"'"}')
-
-              GROUP_ID=$(echo "$CREATE_GROUP" | python3 -c "import sys, json; print(json.load(sys.stdin)['id'])")
-
-              if [ -z "$GROUP_ID" ] || [ "$GROUP_ID" == "null" ]; then
-                echo "Failed to create organization. Response-> $CREATE_GROUP"
-                exit 1
-              fi
-
-              echo "Organization created successfully. Group ID-> $GROUP_ID"
-
-              # Add user1 as an owner of the group
-              echo "Adding user1 as an owner of the organization..."
-              ADD_OWNER=$(curl -s --header "Authorization: Bearer $GITLAB_TOKEN" --header "Content-Type: application/json" --request POST "$GITLAB_URL/api/v4/groups/$GROUP_ID/members" --data '{"user_id": '"$USER_ID"', "access_level": 50}')
-
-              echo "User1 added as owner of the organization. Response-> $ADD_OWNER"
-
-              sleep 30
+              # Include sleep, otherwise it fails sometimes due to configuration changes not applied
+              sleep 60
 
               # Import GitHub repositories
               echo "Importing GitHub repository 1-> $GITHUB_REPO_1"
