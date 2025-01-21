@@ -74,6 +74,12 @@ spec:
               
               echo "User1 created successfully. User ID-> $USER_ID"
 
+              # Set public email for user1
+              echo "Setting public email for user1..."
+              SET_PUBLIC_EMAIL=$(curl -s --header "Authorization: Bearer $GITLAB_TOKEN" --header "Content-Type: application/json" --request PUT "$GITLAB_URL/api/v4/users/$USER_ID" --data "{\"public_email\": \"user1@example.com\"}")
+              
+              echo "Public email set response-> $SET_PUBLIC_EMAIL"
+
               # Create an organization (group) in GitLab
               echo "Creating organization (group) in GitLab..."
               CREATE_GROUP=$(curl -s --header "Authorization: Bearer $GITLAB_TOKEN" --header "Content-Type: application/json" --request POST "$GITLAB_URL/api/v4/groups" --data '{"name": "'"$ORGANIZATION_NAME"'", "path": "'"$ORGANIZATION_NAME"'"}')
