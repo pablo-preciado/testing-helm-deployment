@@ -44,14 +44,7 @@ spec:
                   id: backstage
                   realm: backstage
                   enabled: true
-                  users:
-                    #- username: user1
-                    #  enabled: true
-                    #  emailVerified: true
-                    #  email: user1@example.com
-                    #  credentials:
-                    #    - type: password
-                    #      value: user1       
+                  users: 
                     - username: service-account-backstage
                       emailVerified: false
                       enabled: true
@@ -130,13 +123,6 @@ spec:
                          clientSecret: $GITLAB_CLIENT_SECRET
                          passMaxAge: "false"
                          allowedClockSkew: "0"
-                       attributeMappings:
-                         - from: email
-                           to: email
-                         - from: name
-                           to: firstName
-                         - from: last_name
-                           to: lastName
                   identityProviderMappers:
                     - name: email-mapper
                       identityProviderAlias: GitlabOIDC
