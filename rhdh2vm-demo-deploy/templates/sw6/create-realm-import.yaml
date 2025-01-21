@@ -146,28 +146,3 @@ spec:
                         claim: email
                         user.attribute: email
               EOF
-
-#                       identityProviderMappers:
-#                         - identityProviderMapper: oidc-user-attribute-idp-mapper
-#                           name: email
-#                           config:
-#                             syncMode: INHERIT
-#                             user.attribute: email
-#                             claim: email
-#                             claim.value: email
-#- id: e9e5687a-e4ad-4c29-9b1e-655e76825eb5
-#  name: testing
-#  identityProviderAlias: GitlabOIDC
-#  identityProviderMapper: oidc-user-attribute-idp-mapper
-#  config:
-#    syncMode: INHERIT
-#    claim: email
-#    user.attribute: email
-#- id: 290b9d03-62a7-4103-8f59-889ac2fce0f5
-#  name: holahola
-#  identityProviderAlias: GitlabOIDC
-#  identityProviderMapper: hardcoded-attribute-idp-mapper
-#  config:
-#    attribute.value: user1@example.com
-#    syncMode: INHERIT
-#    attribute: email
