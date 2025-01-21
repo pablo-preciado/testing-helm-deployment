@@ -138,8 +138,7 @@ spec:
                          - from: last_name
                            to: lastName
                   identityProviderMappers:
-                    - id: 7da4ddeb-91a4-47c3-a169-102c6bd3dae6
-                      name: email-mapper
+                    - name: email-mapper
                       identityProviderAlias: GitlabOIDC
                       identityProviderMapper: oidc-user-attribute-idp-mapper
                       config:
