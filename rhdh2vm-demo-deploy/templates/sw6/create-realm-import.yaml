@@ -95,18 +95,6 @@ spec:
                       publicClient: false
                       frontchannelLogout: false
                       protocol: openid-connect
-                      mappers:
-                        - name: email
-                          protocol: openid-connect
-                          protocolMapper: oidc-usermodel-attribute-mapper
-                          consentRequired: false
-                          config:
-                            "user.attribute": email
-                            "claim.name": email
-                            "jsonType.label": String
-                            "id.token.claim": true
-                            "access.token.claim": true
-                            "userinfo.token.claim": true
                   identityProviders:
                     - alias: GitlabOIDC
                        displayName: Gitlab
@@ -149,6 +137,15 @@ spec:
                            to: firstName
                          - from: last_name
                            to: lastName
+                  identityProviderMappers:
+                    - id: 7da4ddeb-91a4-47c3-a169-102c6bd3dae6
+                      name: email-mapper
+                      identityProviderAlias: GitlabOIDC
+                      identityProviderMapper: oidc-user-attribute-idp-mapper
+                      config:
+                        syncMode: INHERIT
+                        claim: email
+                        user.attribute: email
               EOF
 
 #                       identityProviderMappers:
