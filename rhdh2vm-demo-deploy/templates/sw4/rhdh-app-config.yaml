@@ -70,10 +70,7 @@ data:
       database:
         connection:
           password: ${POSTGRESQL_ADMIN_PASSWORD}
-          user: postgres
-    reading:
-      allow:
-      - host: '*.apps.cluster-zb6tw.zb6tw.gcp.redhatworkshops.io'          
+          user: postgres    
     catalog:
       locations:
       - rules:
@@ -90,11 +87,15 @@ data:
         gitlab:
           selfHosted:
             host: ${GITLAB_HOST}
+            orgEnabled: true
+            group: development
+            rules:
+              - allow: [Group, User]
             schedule:
               frequency:
                 seconds: 10
               timeout:
-                seconds: 60     
+                seconds: 60      
         github:
           providerId:
             catalogPath: /catalog-info.yaml
