@@ -39,14 +39,14 @@ gitlab:
   subscriptionName: gitlab-operator-kubernetes
   version: 8.6.3
   instanceName: gitlab
-  repo1: pulular
-  repo2: engobe
+  repo1: testing-helm-deployment
+  repo2: importfromghtest
   organizationName: development
   user1Password: redhat1!
 github:
   pat: fill-with-your-pat
-  repo1: https://github.com/pablo-preciado/aap-ocpv
-  repo2: https://github.com/pablo-preciado/testing-helm-deployment
+  repo1: https://github.com/pablo-preciado/testing-helm-deployment
+  repo2: https://github.com/pablo-preciado/aap-ocpv
 openshiftVirtualization:
   namespaceName: openshift-cnv
   operatorGroupName: openshift-cnv-operatorgroup
