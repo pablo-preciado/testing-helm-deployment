@@ -39,7 +39,7 @@ gitlab:
   subscriptionName: gitlab-operator-kubernetes
   version: 8.6.3
   instanceName: gitlab
-  repo1: testing-helm-deployment
+  repo1: rhdh2vm
   repo2: importfromghtest
   organizationName: development
   user1Password: redhat1!
