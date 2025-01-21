@@ -95,50 +95,70 @@ spec:
                       publicClient: false
                       frontchannelLogout: false
                       protocol: openid-connect
+                      mappers:
+                        - name: email
+                          protocol: openid-connect
+                          protocolMapper: oidc-usermodel-attribute-mapper
+                          consentRequired: false
+                          config:
+                            "user.attribute": email
+                            "claim.name": email
+                            "jsonType.label": String
+                            "id.token.claim": true
+                            "access.token.claim": true
+                            "userinfo.token.claim": true
                   identityProviders:
                     - alias: GitlabOIDC
-                      displayName: Gitlab
-                      providerId: oidc
-                      enabled: true
-                      # updateProfileFirstLoginMode: on
-                      trustEmail: true
-                      storeToken: false
-                      addReadTokenRoleOnCreate: false
-                      authenticateByDefault: false
-                      linkOnly: false
-                      hideOnLogin: false
-                      firstBrokerLoginFlowAlias: first broker login
-                      config:
-                        validateSignature: "false"
-                        tokenUrl: https://{{ .Values.gitlab.instanceName }}.{{ .Values.cluster.domain }}/oauth/token
-                        acceptsPromptNoneForwardFromClient: "false"
-                        clientId: $GITLAB_CLIENT_ID
-                        uiLocales: "false"
-                        isAccessTokenJWT: "false"
-                        filteredByClaim: "false"
-                        backchannelSupported: "false"
-                        caseSensitiveOriginalUsername: "false"
-                        disableNonce: "false"
-                        loginHint: "false"
-                        sendClientIdOnLogout: "false"
-                        pkceEnabled: "false"
-                        clientAuthMethod: client_secret_basic
-                        authorizationUrl: https://{{ .Values.gitlab.instanceName }}.{{ .Values.cluster.domain }}/oauth/authorize
-                        disableUserInfo: "false"
-                        sendIdTokenOnLogout: "true"
-                        syncMode: LEGACY
-                        clientSecret: $GITLAB_CLIENT_SECRET
-                        passMaxAge: "false"
-                        allowedClockSkew: "0"
-                      attributeMappings:
-                        - from: email
-                          to: email
-                        - from: name
-                          to: firstName
-                        - from: last_name
-                          to: lastName
-                          identityProviderMappers:
+                       displayName: Gitlab
+                       providerId: oidc
+                       enabled: true
+                       # updateProfileFirstLoginMode: on
+                       trustEmail: true
+                       storeToken: false
+                       addReadTokenRoleOnCreate: false
+                       authenticateByDefault: false
+                       linkOnly: false
+                       hideOnLogin: false
+                       firstBrokerLoginFlowAlias: first broker login
+                       config:
+                         validateSignature: "false"
+                         tokenUrl: https://{{ .Values.gitlab.instanceName }}.{{ .Values.cluster.domain }}/oauth/token
+                         acceptsPromptNoneForwardFromClient: "false"
+                         clientId: $GITLAB_CLIENT_ID
+                         uiLocales: "false"
+                         isAccessTokenJWT: "false"
+                         filteredByClaim: "false"
+                         backchannelSupported: "false"
+                         caseSensitiveOriginalUsername: "false"
+                         disableNonce: "false"
+                         loginHint: "false"
+                         sendClientIdOnLogout: "false"
+                         pkceEnabled: "false"
+                         clientAuthMethod: client_secret_basic
+                         authorizationUrl: https://{{ .Values.gitlab.instanceName }}.{{ .Values.cluster.domain }}/oauth/authorize
+                         disableUserInfo: "false"
+                         sendIdTokenOnLogout: "true"
+                         syncMode: LEGACY
+                         clientSecret: $GITLAB_CLIENT_SECRET
+                         passMaxAge: "false"
+                         allowedClockSkew: "0"
+                       attributeMappings:
+                         - from: email
+                           to: email
+                         - from: name
+                           to: firstName
+                         - from: last_name
+                           to: lastName
               EOF
+
+#                       identityProviderMappers:
+#                         - identityProviderMapper: oidc-user-attribute-idp-mapper
+#                           name: email
+#                           config:
+#                             syncMode: INHERIT
+#                             user.attribute: email
+#                             claim: email
+#                             claim.value: email
 #- id: e9e5687a-e4ad-4c29-9b1e-655e76825eb5
 #  name: testing
 #  identityProviderAlias: GitlabOIDC
