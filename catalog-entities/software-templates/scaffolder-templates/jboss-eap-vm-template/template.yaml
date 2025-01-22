@@ -11,7 +11,7 @@ metadata:
     - maven
     - eap
 spec:
-  owner: rhdh
+  owner: user1
   type: service
   parameters:
     - title: Provide Information for Application
