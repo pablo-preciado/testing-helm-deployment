@@ -6,4 +6,4 @@ metadata:
 spec:
   type: url
   targets:
-     - https://gitlab.apps.cluster-rbztz.rbztz.gcp.redhatworkshops.io/development/catalog-entities/blob/main/software-templates/scaffolder-templates/jboss-eap-vm-template/template.yaml
+     - https://gitlab.apps.cluster-hprzc.hprzc.gcp.redhatworkshops.io/development/rhdh2vm/blob/main/catalog-entities/software-templates/scaffolder-templates/jboss-eap-vm-template/template.yaml

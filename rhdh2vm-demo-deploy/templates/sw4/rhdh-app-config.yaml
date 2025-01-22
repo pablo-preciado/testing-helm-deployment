@@ -1,13 +1,11 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: '{{ .Values.developerhub.appConfigConfigMapName }}'
-  namespace: '{{ .Values.developerhub.namespaceName }}'
+  name: my-backstage-appconfig-developer-hub
+  namespace: rhdh-operator
   labels:
     app.kubernetes.io/instance: developer-hub
     app.kubernetes.io/name: backstage
-  annotations:
-    argocd.argoproj.io/sync-wave: "4"
 data:
   my-app-config.yaml: |
     app:
@@ -70,43 +68,25 @@ data:
       database:
         connection:
           password: ${POSTGRESQL_ADMIN_PASSWORD}
-          user: postgres    
+          user: postgres      
     catalog:
       locations:
       - rules:
         - allow:
           - Template
-        target: https://${GITLAB_HOST}/development/catalog-entities/blob/main/software-templates/showcase-templates.yaml
+          - Group
+          - User
+        target: https://${GITLAB_HOST}/development/rhdh2vm/blob/main/catalog-entities/all.yaml
         type: url
-      - rules:
-        - allow:
-          - Template
-        target: https://${GITLAB_HOST}/development/catalog-entities/blob/main/all.yaml
-        type: url
-      providers:
+      providers:  
         gitlab:
           selfHosted:
             host: ${GITLAB_HOST}
-            orgEnabled: true
-            group: development
-            rules:
-              - allow: [Group, User]
             schedule:
               frequency:
                 seconds: 10
               timeout:
-                seconds: 60      
-        github:
-          providerId:
-            catalogPath: /catalog-info.yaml
-            filters:
-              branch: main
-            organization: janus-backstage
-            schedule:
-              frequency:
-                minutes: 1
-              timeout:
-                minutes: 3                         
+                seconds: 60                               
         keycloakOrg:
           default:
             baseUrl: ${KEYCLOAK_URL_CATALOG} 
