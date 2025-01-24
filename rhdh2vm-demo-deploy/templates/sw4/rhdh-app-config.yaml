@@ -19,13 +19,13 @@ data:
           url: ${ARGOCD_URL}
         type: config
     auth:
-      environment: development     
+      environment: production    
       session:
         secret: 
           'authsessionsecret' 
       providers:
         oidc:
-          development:
+          production:
             clientId: ${KEYCLOAK_CLIENTID}
             clientSecret: ${KEYCLOAK_CLIENTSECRET}
             metadataUrl: ${KEYCLOAK_URL}         
