@@ -50,3 +50,12 @@ rules:
     resources:
       - pipelineruns
       - taskruns
+  - verbs:
+      - get
+      - list
+    apiGroups:
+      - kubevirt.io
+    resources:
+      - virtualmachines
+      - virtualmachineinstances
+
