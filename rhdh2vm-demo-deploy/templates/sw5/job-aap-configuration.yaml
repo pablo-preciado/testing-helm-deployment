@@ -44,18 +44,9 @@ spec:
               AUTOMATION_HUB_API_TOKEN={{ .Values.automationhub.apiToken }}
               # Other variables needed
               OCP_API_URL=$(oc get infrastructure cluster -o json | python3 -c "import sys, json; print(json.load(sys.stdin)['status']['apiServerURL'])")
-              
-              echo "we start some debuggin here"
+              OCP_API_TOKEN=$(oc get secret/ansible-user-token -n {{ .Values.aap.namespaceName }} -o jsonpath='{.data.token}' | base64 -d)
 
-              TEST1=$(oc get secret -n aap)
-              echo "List of secrets in namespace aap: $TEST1"
-
-              TEST2=$(oc describe secret ansible-user-token -n aap)
-              echo "Description of secret ansuble-user-token: $TEST2"
-
-              OCP_API_TOKEN=$(oc get secret/ansible-user-token -n {{ .Values.aap.instanceName }} -o jsonpath='{.data.token}' | base64 -d)
-
-              echo "This is a debugging text, delete once it's not needed. The ansible-user token is: $OCP_API_TOKEN"
+              echo "The OpenShift ansible-user token is: $OCP_API_TOKEN"
 
               # Authenticate in Automation controller
               echo "Controller authentication"
