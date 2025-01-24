@@ -30,8 +30,6 @@ spec:
           value: <here-goes-your-automationhub-authUrl>
         - name: automationhub.apiToken
           value: <here-goes-your-automationhub-apiToken>
-        - name: ocp.apiToken
-          value: <here-goes-your-ocp-apiToken>
     path: rhdh2vm-demo-deploy
     repoURL: 'https://github.com/pablo-preciado/testing-helm-deployment.git'
     targetRevision: HEAD

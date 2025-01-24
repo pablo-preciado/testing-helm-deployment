@@ -44,7 +44,9 @@ spec:
               AUTOMATION_HUB_API_TOKEN={{ .Values.automationhub.apiToken }}
               # Other variables needed
               OCP_API_URL=$(oc get infrastructure cluster -o json | python3 -c "import sys, json; print(json.load(sys.stdin)['status']['apiServerURL'])")
-              OCP_API_TOKEN={{ .Values.ocp.apiToken }}
+              OCP_API_TOKEN=$(oc get secret/ansible-user-token -n {{ .Values.aap.instanceName }} -o jsonpath='{.data.token}' | base64 -d)
+
+              echo "This is a debugging text, delete once it's not needed. The ansible-user token is: $OCP_API_TOKEN"
 
               # Authenticate in Automation controller
               echo "Controller authentication"

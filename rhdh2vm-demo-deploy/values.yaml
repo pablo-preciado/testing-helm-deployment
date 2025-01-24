@@ -15,8 +15,6 @@ automationhub:
   url: https://console.redhat.com/api/automation-hub/content/published/
   authUrl: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
   apiToken: changeme
-ocp:
-  apiToken: changeme
 cluster:
   domain: apps.cluster-grlrs.grlrs.gcp.redhatworkshops.io
 aap:
