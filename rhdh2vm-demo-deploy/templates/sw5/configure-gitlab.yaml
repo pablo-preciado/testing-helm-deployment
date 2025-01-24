@@ -92,6 +92,9 @@ spec:
               fi
 
               echo "Organization created successfully. Group ID-> $GROUP_ID"
+              # Set repo public visibility for group development
+              
+              SET_PUBLIC_VISIBILITY=$(curl -s --header "Authorization: Bearer $GITLAB_TOKEN" --header "Content-Type: application/json" --request POST "$GITLAB_URL/api/v4/groups/$GROUP_ID" --data '{"visibility":"public"}')              
 
               # Add user1 as an owner of the group
               echo "Adding user1 as an owner of the organization..."

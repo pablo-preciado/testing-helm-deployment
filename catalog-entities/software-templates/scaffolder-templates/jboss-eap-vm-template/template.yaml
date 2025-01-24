@@ -94,9 +94,7 @@ spec:
               title: Repo Host
               type: string
               description: Your SCM host
-              default: gitlab.apps.cluster-rbztz.rbztz.gcp.redhatworkshops.io
-              enum:
-                - gitlab.apps.cluster-rbztz.rbztz.gcp.redhatworkshops.io
+              default: CHANGE_THIS:gitlab.apps.cluster-rbztz.rbztz.gcp.redhatworkshops.io
             owner:
               title: Repo Owner
               type: string
