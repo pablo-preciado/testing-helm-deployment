@@ -37,7 +37,7 @@ gitlab:
   namespaceName: gitlab-system
   operatorGroupName: gitlab-system-operator-group
   subscriptionName: gitlab-operator-kubernetes
-  version: 8.6.3
+  version: 8.6.4
   instanceName: gitlab
   repo1: rhdh2vm
   repo2: importfromghtest
