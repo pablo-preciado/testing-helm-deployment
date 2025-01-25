@@ -38,7 +38,7 @@ gitlab:
   version: 8.6.4
   instanceName: gitlab
   repo1: rhdh2vm
-  repo2: importfromghtest
+  repo2: test
   organizationName: development
   user1Password: redhat1!
 github:
