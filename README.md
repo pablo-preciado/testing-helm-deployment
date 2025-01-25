@@ -1,4 +1,4 @@
-# Helm chart for deploying demo environment
+# Managing applications in Virtual Machines with Red Hat Developer Hub and Ansible Automation Platform
 
 ## Resources needed to run this demo
 
@@ -77,4 +77,8 @@ spec:
 ```
 You can also find this application template under the directory `/argo-application` of this repository.
 
-Add the application using OpenShift GUI, ArgoCD GUI, or with the `oc` command line using the command `oc apply -f rhdh2vm-demo-deploy-application.yaml`. After a few minutes, all resources will be ready. 
+Add the application using OpenShift GUI, ArgoCD GUI, or with the `oc` command line using the command `oc apply -f rhdh2vm-demo-deploy-application.yaml`. After a few minutes, all resources will be ready.
+
+## Demo walkthrough
+
+Use this section to explain what's the flow of the demo, what should be shown and how.
