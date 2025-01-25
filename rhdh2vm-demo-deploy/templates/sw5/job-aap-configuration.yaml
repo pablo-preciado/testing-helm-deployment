@@ -177,7 +177,7 @@ spec:
                          \"name\": \"OCP Virt\",
                          \"organization\": 1,
                          \"scm_type\": \"git\",
-                         \"scm_url\": \"https://github.com/pablo-preciado/aap-ocpv.git\"
+                         \"scm_url\": \"https://github.com/pablo-preciado/testing-helm-deployment.git\"
                        }") # | jq -r '.id')
               
               PROJECT_ID=$(echo "$PROJECT_RESPONSE" | python3 -c "import sys, json; print(json.load(sys.stdin).get('id', ''))")

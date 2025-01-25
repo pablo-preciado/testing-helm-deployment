@@ -2,26 +2,29 @@
 
 ## Resources needed to run this demo
 
-You need an OpenShift cluster with OpenShift Virtualization capabilities. If you're a redhatter or a Red Hat partner you can request an OpenShift cluster running in GCP for the purposes of this demo, you can reuqeest it [here](https://catalog.demo.redhat.com/catalog?item=babylon-catalog-prod/gcp-gpte.ocp4-on-gcp.prod&utm_source=webapp&utm_medium=share-link).
+You need an OpenShift cluster with OpenShift Virtualization capabilities. If you're a Red Hatter or a Red Hat partner, you can request an OpenShift cluster running in GCP for this demo. You can request it [here](https://catalog.demo.redhat.com/catalog?item=babylon-catalog-prod/gcp-gpte.ocp4-on-gcp.prod&utm_source=webapp&utm_medium=share-link).
 
-In case you're requesting the OpenShift cluster running in GCP, be aware that you'll need to add a new worker, otherwise there will be no resources available for running your virtual machines.
-
-To add a new node you do it by creating a new MachineSet, you can find the template in this repo. Specifically in `extra-node/machine-set-extra-node.yaml`
+If you're requesting the OpenShift cluster running in GCP, be aware that you'll need to add a new worker; otherwise, there will be no resources available for running your virtual machines. To add a new node, create a new MachineSet. You can find the template in this repository, specifically in `extra-node/machine-set-extra-node.yaml` (make sure you substitute the values according to the comments on that file). 
 
 ## Deploying demo environment
 
-This demo uses all the software officially provided by Red Hat. Therefore, you need to provide certain users, passwords and tokens so the different softwares can reach Red Hat CDN and use official packages. You'll also need to obtain a Github Private Access Token (PAT).
+This demo uses all the software officially provided by Red Hat. Therefore, you need to provide certain usernames, passwords, and tokens so the different software can access the Red Hat CDN and use official packages. You'll also need to obtain a GitHub Personal Access Token (PAT). 
 
-This is the list of information that you need to get:
- - Red Hat Customer Portal username and password. This is simply the username and password you use to connect a RHEL system to Red Hat repos using subscription-manager.
- - Pool id for an Ansible Automation Platform subscription. You can find it in [Red Hat Customer Portal](https://access.redhat.com/), navigating to Subscriptions (top left) > Subscriptions tab > Search "Ansible Automation Platform" > Click on your subscription and find the Pool ID you need. Make sure it's a valid Ansible Automation Platform subscription.
- - Token for Red Hat Automation Hub. Ansible will need this token so it can download and use official Red Hat collections. To obtain this token navigate to [Red Hat Hybrid Cloud Console](https://console.redhat.com) and navigate to Services (on top left) > Automation > Automation Hub. Once there, click on "Connect to Hub" on the lef side navigation panel. There you'll be able to generate a token.
- - Client ID and Client Secret for a Red Hat Customer Portal Service Account. This is used during the jboss installation process, to obtain this values you can easily create a Service Account. Go to [Red Hat Hybrid Cloud Console](https://console.redhat.com) and click on the gear icon (top right), in the drop down menu click on "Service Accounts". Once there create a service account and note down the Client ID and Client Secret.
- - Github PAT (classic). Log in Github and navigate to the [tokens settings site](https://github.com/settings/tokens), create a classic token. This is needed to import the git repo in the Gitlab that we deploy locally for the demo. Even if the repo is public you need a PAT to interact with Github API.
- - Cluster domain. You need to pass the application doman of your cluster to the helm chart to properly deploy the demo. It should be something like `apps.cluster-dqxwv.dqxwv.gcp.redhatworkshops.io`.
+This is the list of information you need to obtain:
 
-Once you have retrieved all the username, passwords and tokens go to your openshift cluster and install OpenShift Gitops operator.
-Once installed create an Application object with all the information you just collected under the values section:
+- Red Hat Customer Portal username and password: These are used to connect a RHEL system to Red Hat repositories using subscription-manager.
+
+- Pool ID for an Ansible Automation Platform subscription: You can find this in the [Red Hat Customer Portal](https://access.redhat.com/) by navigating to Subscriptions (top left) > Subscriptions tab > Search "Ansible Automation Platform" > Click on your subscription and locate the Pool ID. Ensure it's a valid Ansible Automation Platform subscription.
+
+- Token for Red Hat Automation Hub. Ansible will need this token to download and use official Red Hat collections. To obtain this token, navigate to the [Red Hat Hybrid Cloud Console](https://console.redhat.com) and go to Services (on the top left) > Automation > Automation Hub. Once there, click on "Connect to Hub" on the left side navigation panel. There, you'll be able to generate a token.
+
+- Client ID and Client Secret for a Red Hat Customer Portal Service Account are used during the JBoss installation process. To obtain these values, you can easily create a Service Account. Go to the [Red Hat Hybrid Cloud Console](https://console.redhat.com) and click on the gear icon (top right). In the drop-down menu, click on "Service Accounts." Once there, create a service account and note down the Client ID and Client Secret.
+
+- GitHub PAT (classic): Log in to GitHub and navigate to the [tokens settings site](https://github.com/settings/tokens) to create a classic token. This is needed to import the Git repo into the GitLab that we deploy locally for the demo. Even if the repo is public, you need a PAT to interact with the GitHub API.
+
+- Cluster domain. You need to pass the application domain of your cluster to the Helm chart to properly deploy the demo. It should be something like `apps.cluster-dqxwv.dqxwv.gcp.redhatworkshops.io`. 
+
+Once you have retrieved all the usernames, passwords, and tokens, go to your OpenShift cluster and install the OpenShift GitOps operator. Once installed, create an Application object with all the information you just collected under the helm parameters section. 
 
 ```
 apiVersion: argoproj.io/v1alpha1
@@ -72,6 +75,6 @@ spec:
     syncOptions:
       - CreateNamespace=true
 ```
-You can also find this applitation template under the directory `/argo-application` of this repo.
+You can also find this application template under the directory `/argo-application` of this repository.
 
-Add the Application using OpenShift GUI, ArgoCD GUI or with `oc` command line with the command `oc apply -f rhdh2vm-demo-deploy-application.yaml`. After a few minutes all resources will be ready.
+Add the application using OpenShift GUI, ArgoCD GUI, or with the `oc` command line using the command `oc apply -f rhdh2vm-demo-deploy-application.yaml`. After a few minutes, all resources will be ready. 

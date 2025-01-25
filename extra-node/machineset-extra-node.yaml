@@ -1,5 +1,9 @@
 
-# Replace all the "vp7mj-vp5zd" with whatever is that value in your cluster
+# Replace all the "jq9b8-zxxm5" with whatever is the cluster identifier in your environment.
+# You can obtain the cluster identifier of your environment from any other MachineSet available in the cluster.
+
+# Replace the Project ID "cluster-jq9b8" with the one that matches your environment.
+# You can obtain the Project ID of your environment from any other MachineSet available in the cluster.
 
 apiVersion: machine.openshift.io/v1beta1
 kind: MachineSet
@@ -9,24 +13,23 @@ metadata:
     machine.openshift.io/GPU: '0'
     machine.openshift.io/memoryMb: '16384'
     machine.openshift.io/vCPU: '4'
-  resourceVersion: '24115'
-  name: cluster-vp7mj-vp5zd-worker-d
+  name: cluster-jq9b8-zxxm5-worker-d
   namespace: openshift-machine-api
   labels:
-    machine.openshift.io/cluster-api-cluster: cluster-vp7mj-vp5zd
+    machine.openshift.io/cluster-api-cluster: cluster-jq9b8-zxxm5
 spec:
   replicas: 1
   selector:
     matchLabels:
-      machine.openshift.io/cluster-api-cluster: cluster-vp7mj-vp5zd
-      machine.openshift.io/cluster-api-machineset: cluster-vp7mj-vp5zd-worker-d
+      machine.openshift.io/cluster-api-cluster: cluster-jq9b8-zxxm5
+      machine.openshift.io/cluster-api-machineset: cluster-jq9b8-zxxm5-worker-d
   template:
     metadata:
       labels:
-        machine.openshift.io/cluster-api-cluster: cluster-vp7mj-vp5zd
+        machine.openshift.io/cluster-api-cluster: cluster-jq9b8-zxxm5
         machine.openshift.io/cluster-api-machine-role: worker
         machine.openshift.io/cluster-api-machine-type: worker
-        machine.openshift.io/cluster-api-machineset: cluster-vp7mj-vp5zd-worker-d
+        machine.openshift.io/cluster-api-machineset: cluster-jq9b8-zxxm5-worker-d
     spec:
       lifecycleHooks: {}
       metadata: {}
@@ -37,15 +40,15 @@ spec:
             name: worker-user-data
           deletionProtection: false
           networkInterfaces:
-            - network: cluster-vp7mj-vp5zd-network
-              subnetwork: cluster-vp7mj-vp5zd-worker-subnet
+            - network: cluster-jq9b8-zxxm5-network
+              subnetwork: cluster-jq9b8-zxxm5-worker-subnet
           credentialsSecret:
             name: gcp-cloud-credentials
-          zone: europe-west4-c
+          zone: europe-west4-a
           canIPForward: false
           metadata:
             creationTimestamp: null
-          projectID: cluster-vp7mj
+          projectID: cluster-jq9b8
           region: europe-west4
           kind: GCPMachineProviderSpec
           disks:
@@ -56,9 +59,9 @@ spec:
               sizeGb: 128
               type: pd-ssd
           tags:
-            - cluster-vp7mj-vp5zd-worker
+            - cluster-jq9b8-zxxm5-worker
           serviceAccounts:
-            - email: cluster-vp7mj-vp5zd-w@cluster-vp7mj.iam.gserviceaccount.com
+            - email: cluster-jq9b8-zxxm5-w@cluster-jq9b8.iam.gserviceaccount.com
               scopes:
                 - 'https://www.googleapis.com/auth/cloud-platform'
           apiVersion: machine.openshift.io/v1beta1
