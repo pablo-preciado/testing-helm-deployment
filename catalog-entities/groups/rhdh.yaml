@@ -1,17 +1,24 @@
 apiVersion: backstage.io/v1alpha1
 kind: Group
 metadata:
-  name: rhdh
-  description: The acme-corp organization
-  links:
-    - url: http://www.acme.com/
-      title: Website
-    - url: https://meta.wikimedia.org/wiki/
-      title: Intranet
+  name: development
+  description: Red Hat Developer Hub
 spec:
-  type: organization
+  type: team
   profile:
-    displayName: ACME Corp
-    email: info@example.com
-    picture: https://api.dicebear.com/7.x/identicon/svg?seed=Maggie&flip=true&backgroundColor=ffdfbf
-  children: [infrastructure]
+    # Intentional no displayName for testing
+    email: development@example.com
+  children: []
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: user1
+  description: user1 group
+spec:
+  type: team
+  profile:
+    # Intentional no displayName for testing
+    email: user1gr@example.com
+  parent: development
+  children: []
