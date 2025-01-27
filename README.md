@@ -40,25 +40,21 @@ spec:
     helm:
       parameters:
         - name: cluster.domain
-          value: <here-goes-your-cluster-domain>
+          value: <here-goes-your-openshift-cluster-domain>
         - name: github.pat
           value: <here-goes-your-github-pat>
         - name: rhn.username
-          value: <here-goes-your-rhn-username>
+          value: <here-goes-your-redhat-customer-portal-username>
         - name: rhn.password
-          value: <here-goes-your-rhn-password>
+          value: <here-goes-your-redhat-customer-portal-password>
         - name: rhn.poolId
-          value: <here-goes-your-rhn-poolId>
-        - name: rhn.clientId
-          value: <here-goes-your-rhn-clientId>
-        - name: rhn.clientSecret
-          value: <here-goes-your-rhn-clientSecret>
-        - name: automationhub.url
-          value: <here-goes-your-automationhub-url>
-        - name: automationhub.authUrl
-          value: <here-goes-your-automationhub-authUrl>
+          value: <here-goes-your-ansible-subscription-poolId>
         - name: automationhub.apiToken
-          value: <here-goes-your-automationhub-apiToken>
+          value: <here-goes-your-redhat-automationhub-apiToken>
+        - name: rhn.clientId
+          value: <here-goes-your-redhat-customer-portal-clientId>
+        - name: rhn.clientSecret
+          value: <here-goes-your-redhat-customer-portal-clientSecret>
     path: rhdh2vm-demo-deploy
     repoURL: 'https://github.com/pablo-preciado/testing-helm-deployment.git'
     targetRevision: HEAD
