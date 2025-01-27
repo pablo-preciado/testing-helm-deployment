@@ -181,7 +181,7 @@ data:
     scaffolder: null
     signInPage: oidc   
     techdocs:
-      builder: external
+      builder: local
       generator:
         runIn: local
       publisher:
