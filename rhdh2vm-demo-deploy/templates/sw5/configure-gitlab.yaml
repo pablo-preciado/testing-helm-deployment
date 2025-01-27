@@ -92,9 +92,15 @@ spec:
               fi
 
               echo "Organization created successfully. Group ID-> $GROUP_ID"
-              # Set repo public visibility for group development
               
-              SET_PUBLIC_VISIBILITY=$(curl -s --header "Authorization: Bearer $GITLAB_TOKEN" --header "Content-Type: application/json" --request POST "$GITLAB_URL/api/v4/groups/$GROUP_ID" --data '{"visibility":"public"}')              
+              # Set public visibility for group development
+              echo "Setting public visibility for the group..."
+              SET_PUBLIC_VISIBILITY=$(curl -s --header "Authorization: Bearer $GITLAB_TOKEN" \
+                  --header "Content-Type: application/json" \
+                  --request PUT "$GITLAB_URL/api/v4/groups/$GROUP_ID" \
+                  --data '{"visibility":"public"}')
+                            
+              echo "Group visibility set to public. Response-> $SET_PUBLIC_VISIBILITY"
 
               # Add user1 as an owner of the group
               echo "Adding user1 as an owner of the organization..."
@@ -161,7 +167,19 @@ spec:
                 --data "{\"personal_access_token\": \"$GITHUB_PAT\", \"repo_id\": \"$REPO_ID\", \"target_namespace\": \"$ORGANIZATION_NAME\", \"new_name\": \"$GITLAB_REPO_1\"}")
 
               echo "Results of importing repo1: $IMPORT_REPO_1"
+
+              # Retrieve the newly created repository ID
+              GITLAB_REPO_ID_1=$(echo "$IMPORT_REPO_1" | python3 -c "import sys, json; print(json.load(sys.stdin)['id'])")
+
+              # Set the visibility of the imported repository to public
+              echo "Setting visibility of GitLab repository 1 to public..."
+              curl -s --header "Authorization: Bearer $GITLAB_TOKEN" \
+                --header "Content-Type: application/json" \
+                --request PUT "$GITLAB_URL/api/v4/projects/$GITLAB_REPO_ID_1" \
+                --data '{"visibility": "public"}'
               
+              echo "Visibility of GitLab repository 1 set to public."
+
               echo "Importing GitHub repository 2-> $GITHUB_REPO_2"
               
               # Retrieve repository details
@@ -179,6 +197,18 @@ spec:
                 --request POST "$GITLAB_URL/api/v4/import/github" \
                 --data "{\"personal_access_token\": \"$GITHUB_PAT\", \"repo_id\": \"$REPO_ID\", \"target_namespace\": \"$ORGANIZATION_NAME\", \"new_name\": \"$GITLAB_REPO_2\"}")
 
-              echo "Results of importing repo1: $IMPORT_REPO_2"
+              echo "Results of importing repo2: $IMPORT_REPO_2"
               
+              # Retrieve the newly created repository ID
+              GITLAB_REPO_ID_2=$(echo "$IMPORT_REPO_2" | python3 -c "import sys, json; print(json.load(sys.stdin)['id'])")
+              
+              # Set the visibility of the imported repository to public
+              echo "Setting visibility of GitLab repository 2 to public..."
+              curl -s --header "Authorization: Bearer $GITLAB_TOKEN" \
+                --header "Content-Type: application/json" \
+                --request PUT "$GITLAB_URL/api/v4/projects/$GITLAB_REPO_ID_2" \
+                --data '{"visibility": "public"}'
+              
+              echo "Visibility of GitLab repository 2 set to public."
+
               echo "GitHub repositories imported successfully."

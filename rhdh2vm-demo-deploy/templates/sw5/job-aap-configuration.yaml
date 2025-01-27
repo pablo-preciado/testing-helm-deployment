@@ -44,7 +44,9 @@ spec:
               AUTOMATION_HUB_API_TOKEN={{ .Values.automationhub.apiToken }}
               # Other variables needed
               OCP_API_URL=$(oc get infrastructure cluster -o json | python3 -c "import sys, json; print(json.load(sys.stdin)['status']['apiServerURL'])")
-              OCP_API_TOKEN={{ .Values.ocp.apiToken }}
+              OCP_API_TOKEN=$(oc get secret/ansible-user-token -n {{ .Values.aap.namespaceName }} -o jsonpath='{.data.token}' | base64 -d)
+
+              echo "The OpenShift ansible-user token is: $OCP_API_TOKEN"
 
               # Authenticate in Automation controller
               echo "Controller authentication"
@@ -96,6 +98,26 @@ spec:
                   
               echo "A subscription has been succesfully configured"
               
+              # Generating a token for the admin user in AAP and creating a secret that stores it
+              echo "Generating a token for the admin user in AAP and storing it into a secret"
+              
+              ADMIN_USER_TOKEN=$(curl -k -X POST "$CONTROLLER_API_URL/users/admin/tokens/" \
+                  -H "Authorization: Bearer $CONTROLLER_TOKEN" \
+                  -H "Content-Type: application/json" \
+                  -d '{ "scope": "write", "description": "Token created automatically by helm chart" }' | python3 -c "import sys, json; print(json.load(sys.stdin).get('token', ''))")
+              
+              echo "The token for the admin user is: $ADMIN_USER_TOKEN"
+              
+              # Generating a token for the admin user in AAP and creating a secret that stores it
+              echo "Creating the openshift secret that will be referenced afterwards by the AnsibleJob CR created via Developer Hub"
+              
+              oc create secret generic controller-access \
+              --from-literal=token=$ADMIN_USER_TOKEN \
+              --from-literal=host=$AAP_URL -n {{ .Values.aap.namespaceName }} \
+              --dry-run=client -o yaml | oc apply -f -
+
+              echo "A token for the admin user has been generated and stored in the secret controller-access in namespace {{ .Values.aap.namespaceName }}"
+
               # Create the credential for connecting with Red Hat Automation Hub
               echo "Creating Red Hat Automation Hub Credential"
 
@@ -155,7 +177,7 @@ spec:
                          \"name\": \"OCP Virt\",
                          \"organization\": 1,
                          \"scm_type\": \"git\",
-                         \"scm_url\": \"https://github.com/pablo-preciado/aap-ocpv.git\"
+                         \"scm_url\": \"https://github.com/pablo-preciado/testing-helm-deployment.git\"
                        }") # | jq -r '.id')
               
               PROJECT_ID=$(echo "$PROJECT_RESPONSE" | python3 -c "import sys, json; print(json.load(sys.stdin).get('id', ''))")

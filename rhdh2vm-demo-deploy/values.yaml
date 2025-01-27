@@ -15,8 +15,6 @@ automationhub:
   url: https://console.redhat.com/api/automation-hub/content/published/
   authUrl: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
   apiToken: changeme
-ocp:
-  apiToken: changeme
 cluster:
   domain: apps.cluster-grlrs.grlrs.gcp.redhatworkshops.io
 aap:
@@ -37,10 +35,10 @@ gitlab:
   namespaceName: gitlab-system
   operatorGroupName: gitlab-system-operator-group
   subscriptionName: gitlab-operator-kubernetes
-  version: 8.6.3
+  version: 8.6.4
   instanceName: gitlab
   repo1: rhdh2vm
-  repo2: importfromghtest
+  repo2: test
   organizationName: development
   user1Password: redhat1!
 github:

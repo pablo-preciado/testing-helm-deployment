@@ -40,22 +40,8 @@ data:
       package: ./dynamic-plugins/dist/backstage-plugin-techdocs-backend-dynamic
     - disabled: false
       package: ./dynamic-plugins/dist/backstage-plugin-techdocs
-    - disabled: false
+    - disabled: true
       package: ./dynamic-plugins/dist/backstage-community-plugin-tekton
-      pluginConfig:
-        dynamicPlugins:
-          frontend:
-            janus-idp.backstage-plugin-tekton:
-              mountPoints:
-              - config:
-                  if:
-                    allOf:
-                    - isTektonCIAvailable
-                  layout:
-                    gridColumn: 1 / -1
-                    gridRowStart: 1
-                importName: TektonCI
-                mountPoint: entity.page.ci/cards
     - disabled: false
       package: ./dynamic-plugins/dist/backstage-community-plugin-tech-radar
     - disabled: true
