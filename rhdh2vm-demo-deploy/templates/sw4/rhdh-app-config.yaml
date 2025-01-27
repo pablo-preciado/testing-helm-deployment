@@ -151,10 +151,6 @@ data:
         type: multiTenant
     permission:
       enabled: false
-      rbac:
-        admin:
-          users:
-          - name: user:default/user1
     proxy:
       endpoints:
         /developer-hub:
